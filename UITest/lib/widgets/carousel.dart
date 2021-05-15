@@ -1,3 +1,4 @@
+import 'package:UITest/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +20,7 @@ class Carousel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(12, 0, 0, 8),
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        ),
+        HeadlineText("Latest releases"),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

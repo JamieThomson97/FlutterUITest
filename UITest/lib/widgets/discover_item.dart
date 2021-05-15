@@ -12,17 +12,18 @@ class DiscoverItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8.0),
+        borderRadius: BorderRadius.all(
+          Radius.circular(8.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(1),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 0), // changes position of shadow
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(1),
-              spreadRadius: 1,
-              blurRadius: 1,
-              offset: Offset(0, 0), // changes position of shadow
-            ),
-          ]),
+        ],
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(
           Radius.circular(8.0),

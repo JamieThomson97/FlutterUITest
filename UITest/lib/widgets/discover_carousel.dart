@@ -21,9 +21,7 @@ class DiscoverCarousel extends StatelessWidget {
                 discIndex++;
                 return DiscoverItem(index: discIndex);
               } else
-                return const SizedBox(
-                  width: 16,
-                );
+                return const SizedBox(width: 16);
             },
           ),
         ],
