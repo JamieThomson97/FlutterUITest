@@ -1,7 +1,7 @@
-import 'package:UITest/widgets/carousel.dart';
-import 'package:UITest/widgets/discover_carousel.dart';
-import 'package:UITest/widgets/misc_widgets.dart';
-import 'package:UITest/widgets/title_bar.dart';
+import 'package:vibration/widgets/carousel.dart';
+import 'package:vibration/widgets/discover_carousel.dart';
+import 'package:vibration/widgets/misc_widgets.dart';
+import 'package:vibration/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

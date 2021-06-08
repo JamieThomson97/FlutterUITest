@@ -1,11 +1,12 @@
 import 'dart:math';
 
-import 'package:UITest/widgets/carousel.dart';
-import 'package:UITest/widgets/discover_carousel.dart';
-import 'package:UITest/widgets/event_tile.dart';
-import 'package:UITest/widgets/events_list.dart';
-import 'package:UITest/widgets/misc_widgets.dart';
+import 'package:vibration/widgets/carousel.dart';
+import 'package:vibration/widgets/discover_carousel.dart';
+import 'package:vibration/widgets/event_tile.dart';
+import 'package:vibration/widgets/events_list.dart';
+import 'package:vibration/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class ArtistPage extends StatelessWidget {
@@ -16,7 +17,6 @@ class ArtistPage extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         children: [
           Stack(
-            // Image and follow button
             alignment: Alignment.center,
             clipBehavior: Clip.none,
             children: [
@@ -116,7 +116,7 @@ class ArtistInfoColumn extends StatelessWidget {
     return Column(
       children: [
         Text(
-          number.toString(),
+          NumberFormat("#,###").format(number).toString(),
           style: TextStyle(fontSize: 35, fontWeight: FontWeight.w500, color: Colors.blue[400]),
         ),
         Container(height: 10),

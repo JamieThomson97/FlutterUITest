@@ -1,4 +1,4 @@
-import 'package:UITest/widgets/misc_widgets.dart';
+import 'package:vibration/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

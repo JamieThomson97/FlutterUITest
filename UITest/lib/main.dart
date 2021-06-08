@@ -1,7 +1,7 @@
-import 'package:UITest/screens/artist_page.dart';
-import 'package:UITest/screens/home_page.dart';
-import 'package:UITest/screens/search_page.dart';
-import 'package:UITest/theme.dart';
+import 'package:vibration/screens/artist_page.dart';
+import 'package:vibration/screens/home_page.dart';
+import 'package:vibration/screens/search_page.dart';
+import 'package:vibration/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ArtistPage(),
+      home: HomePage(),
       theme: theme,
     );
   }

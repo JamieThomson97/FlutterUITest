@@ -1,4 +1,4 @@
-package com.example.UITest
+package com.example.vibration
 
 import io.flutter.embedding.android.FlutterActivity
 
