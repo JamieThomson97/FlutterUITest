@@ -1,5 +1,6 @@
 import 'package:vibration/screens/artist_page.dart';
 import 'package:vibration/screens/home_page.dart';
+import 'package:vibration/screens/now_playing_page.dart';
 import 'package:vibration/screens/search_page.dart';
 import 'package:vibration/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: NowPlayingScreen(),
       theme: theme,
     );
   }

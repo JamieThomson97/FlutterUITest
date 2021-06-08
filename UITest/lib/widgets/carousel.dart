@@ -7,16 +7,16 @@ import 'mix_tile_circle.dart';
 
 class Carousel extends StatelessWidget {
   const Carousel({
-    @required this.title,
+    required this.title,
     this.isCircle,
   });
 
-  final bool isCircle;
+  final bool? isCircle;
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    bool actualIsCircle = isCircle != null && isCircle;
+    bool actualIsCircle = isCircle != null && isCircle!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

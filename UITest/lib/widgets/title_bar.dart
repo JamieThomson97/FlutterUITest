@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class TitleBar extends StatelessWidget {
   const TitleBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

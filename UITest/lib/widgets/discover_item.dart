@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverItem extends StatelessWidget {
-  DiscoverItem({Key key, @required this.index}) : super(key: key);
+  DiscoverItem({Key? key, required this.index}) : super(key: key);
 
   final int index;
 

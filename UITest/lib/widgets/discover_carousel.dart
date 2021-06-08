@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'discover_item.dart';
 
 class DiscoverCarousel extends StatelessWidget {
-  const DiscoverCarousel({Key key}) : super(key: key);
+  const DiscoverCarousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
