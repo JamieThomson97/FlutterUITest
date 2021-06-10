@@ -69,7 +69,7 @@ class NowPlayingScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: 600,
                   itemBuilder: ((BuildContext context, int index) {
-                    if (index < 42) {
+                    if (index < 42 || index > 600 - 42) {
                       return Container(
                         width: 5,
                       );
@@ -97,7 +97,22 @@ class NowPlayingScreen extends StatelessWidget {
   }
 
   _onUpdateScroll(ScrollMetrics metrics) {
-    print("Scroll Update");
+    // if there is 0 before, haven't moved.
+    // The position in the track is directly related to the extentBefore
+    // Need to use the extent after to work out when at the end.
+    // print("Scroll Update");
+    int songLength = 300;
+    int maxPixels = 542;
+    // print(metrics.pixels);
+    var percentage = metrics.pixels / maxPixels;
+    var seconds = (songLength * percentage).round();
+    if (seconds > songLength) seconds = songLength;
+    int minutes = (seconds / 60).truncate();
+    var remainingSeconds = seconds - (minutes * 60);
+
+    // maybe use the pixels metric.
+    // print(metrics.pixels);
+    print("$minutes:$remainingSeconds");
   }
 
   _onEndScroll(ScrollMetrics metrics) {

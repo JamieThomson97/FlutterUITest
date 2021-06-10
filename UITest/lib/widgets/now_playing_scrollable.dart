@@ -9,7 +9,7 @@ class NowPlayingScrollable extends StatefulWidget {
 }
 
 class _NowPlayingScrollableState extends State<NowPlayingScrollable> {
-  Color _color = Colors.white;
+  Color _color = Colors.red;
   @override
   Widget build(BuildContext context) {
     return Container(
