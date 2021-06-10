@@ -7,13 +7,19 @@ class NowPlayingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
+        ),
+      ),
       alignment: Alignment.centerRight,
       padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-      color: Colors.pink[900],
       child: Column(
         children: [
           SizedBox(
             child: Container(
+              padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,30 +44,29 @@ class NowPlayingScreen extends StatelessWidget {
           ),
           Container(
             height: 50,
-            child: CustomScrollView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      if (index < 42) {
-                        return Container(
-                          width: 5,
-                          // child: Text('Item: $index'),
-                        );
-                      }
-                      bool isBar = index % 2 == 0;
-                      return Container(
-                        alignment: Alignment.center,
-                        color: isBar ? Colors.blue : Colors.transparent,
-                        height: 30,
-                        width: isBar ? 4 : 2,
-                        // child: Text('Item: $index'),
-                      );
-                    },
-                  ),
-                ),
-              ],
+              itemCount: 400,
+              itemBuilder: ((BuildContext context, int index) {
+                if (index < 42) {
+                  return Container(
+                    width: 5,
+                    // child: Text('Item: $index'),
+                  );
+                }
+                bool isBar = index % 2 == 0;
+                return Container(
+                  alignment: Alignment.center,
+                  color: isBar
+                      ? index % 3 == 0
+                          ? Colors.blue
+                          : Colors.amber
+                      : Colors.transparent,
+                  height: 30,
+                  width: isBar ? 4 : 2,
+                  // child: Text('Item: $index'),
+                );
+              }),
             ),
           ),
         ],
