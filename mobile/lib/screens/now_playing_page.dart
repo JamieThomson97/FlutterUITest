@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/widgets/SongLengthScrollController.dart';
 import 'package:vibration/widgets/now_playing_scrollable.dart';
 
 class NowPlayingScreen extends StatelessWidget {
   const NowPlayingScreen({Key? key}) : super(key: key);
+
+// horrible horrible hack
+  static ScrollController _controller = ScrollController();
+  static SongLengthScrollController songLength = SongLengthScrollController(null, _controller);
 
   @override
   Widget build(BuildContext context) {
@@ -50,72 +55,38 @@ class NowPlayingScreen extends StatelessWidget {
             height: 300,
           ),
           SizedBox(
-            height: 300,
+            height: 200,
+          ),
+          songLength,
+          SizedBox(
+            height: 50,
           ),
           Container(
               height: 50,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  if (scrollNotification is ScrollStartNotification) {
-                    _onStartScroll(scrollNotification.metrics);
-                  } else if (scrollNotification is ScrollUpdateNotification) {
-                    _onUpdateScroll(scrollNotification.metrics);
-                  } else if (scrollNotification is ScrollEndNotification) {
-                    _onEndScroll(scrollNotification.metrics);
+              child: ListView.builder(
+                controller: songLength.controller,
+                scrollDirection: Axis.horizontal,
+                itemCount: 585,
+                itemBuilder: ((BuildContext context, int index) {
+                  if (index < 600 * 0.065 || index > 600 * 0.91) {
+                    return Container(
+                      width: 5,
+                    );
                   }
-                  return true;
-                },
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 600,
-                  itemBuilder: ((BuildContext context, int index) {
-                    if (index < 42 || index > 600 - 42) {
-                      return Container(
-                        width: 5,
-                      );
-                    }
-                    if (index & 2 == 0)
-                      return Container(
-                        alignment: Alignment.center,
-                        color: Colors.transparent,
-                        height: 30,
-                        width: 1,
-                        // child: Text('Item: $index'),
-                      );
-                    else
-                      return NowPlayingScrollable();
-                  }),
-                ),
+                  if (index & 2 == 0)
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.transparent,
+                      height: 30,
+                      width: 1,
+                      // child: Text('Item: $index'),
+                    );
+                  else
+                    return NowPlayingScrollable();
+                }),
               )),
         ],
       ),
     );
-  }
-
-  _onStartScroll(ScrollMetrics metrics) {
-    print("Scroll Start");
-  }
-
-  _onUpdateScroll(ScrollMetrics metrics) {
-    // if there is 0 before, haven't moved.
-    // The position in the track is directly related to the extentBefore
-    // Need to use the extent after to work out when at the end.
-    // print("Scroll Update");
-    int songLength = 300;
-    int maxPixels = 542;
-    // print(metrics.pixels);
-    var percentage = metrics.pixels / maxPixels;
-    var seconds = (songLength * percentage).round();
-    if (seconds > songLength) seconds = songLength;
-    int minutes = (seconds / 60).truncate();
-    var remainingSeconds = seconds - (minutes * 60);
-
-    // maybe use the pixels metric.
-    // print(metrics.pixels);
-    print("$minutes:$remainingSeconds");
-  }
-
-  _onEndScroll(ScrollMetrics metrics) {
-    print("Scroll End");
   }
 }
