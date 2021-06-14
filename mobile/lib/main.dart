@@ -2,6 +2,7 @@ import 'package:vibration/presentation/pages/artist_page.dart';
 import 'package:vibration/presentation/pages/home_page.dart';
 import 'package:vibration/presentation/pages/now_playing_page.dart';
 import 'package:vibration/presentation/pages/search_page.dart';
+import 'package:vibration/presentation/pages/sign_in_page.dart';
 import 'package:vibration/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: NowPlayingScreen(),
+      home: SignInPage(),
       theme: theme,
     );
   }

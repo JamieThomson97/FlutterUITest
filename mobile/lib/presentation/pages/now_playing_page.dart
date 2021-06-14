@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
-class NowPlayingScreen extends StatelessWidget {
-  const NowPlayingScreen({Key? key}) : super(key: key);
+class NowPlayingPage extends StatelessWidget {
+  const NowPlayingPage({Key? key}) : super(key: key);
 
 // horrible horrible hack
   static ScrollController _controller = ScrollController();
