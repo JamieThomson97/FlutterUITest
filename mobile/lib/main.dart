@@ -1,7 +1,7 @@
-import 'package:vibration/screens/artist_page.dart';
-import 'package:vibration/screens/home_page.dart';
-import 'package:vibration/screens/now_playing_page.dart';
-import 'package:vibration/screens/search_page.dart';
+import 'package:vibration/presentation/pages/artist_page.dart';
+import 'package:vibration/presentation/pages/home_page.dart';
+import 'package:vibration/presentation/pages/now_playing_page.dart';
+import 'package:vibration/presentation/pages/search_page.dart';
 import 'package:vibration/theme.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vibration/widgets/SongLengthScrollController.dart';
-import 'package:vibration/widgets/now_playing_scrollable.dart';
+import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
+import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
 class NowPlayingScreen extends StatelessWidget {
   const NowPlayingScreen({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
-import 'package:vibration/widgets/carousel.dart';
-import 'package:vibration/widgets/discover_carousel.dart';
-import 'package:vibration/widgets/title_bar.dart';
+import 'package:vibration/presentation/widgets/carousel.dart';
+import 'package:vibration/presentation/widgets/discover_carousel.dart';
+import 'package:vibration/presentation/widgets/title_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
