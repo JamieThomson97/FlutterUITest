@@ -7,9 +7,17 @@ class LoginState extends Equatable {
     this.status = FormzStatus.pure,
   });
 
+  static bool buttonStateChanged(LoginState prev, LoginState current) {
+    return prev.email != current.email || prev.password != current.password;
+  }
+
+  // static bool enabledButtons(LoginState prev, LoginState current) {}
+
   final Email email;
   final Password password;
   final FormzStatus status;
+
+  bool inputIsValid() => true; // status == FormzStatus.valid;
 
   @override
   List<Object> get props => [email, password, status];
