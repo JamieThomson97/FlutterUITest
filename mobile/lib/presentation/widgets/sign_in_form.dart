@@ -15,16 +15,29 @@ class SignInForm extends StatelessWidget {
             _EmailInputField(),
             const SizedBox(height: 20),
             _PasswordInputField(),
-            const SizedBox(height: 70),
-            Center(
-              child: Row(
-                children: [
-                  _SignInButton(),
-                  const Spacer(),
-                  _RegisterButton(),
-                ],
-              ),
+            const SizedBox(height: 60),
+            _LoginFormButton(
+              null,
+              "Log In",
+              () => context.read<LoginCubit>().logInWithCredentials(),
             ),
+            // Center(
+            //   child: Row(
+            //     children: [
+            //       _LoginFormButton(
+            //         null,
+            //         "Log In",
+            //         () => context.read<LoginCubit>().logInWithCredentials(),
+            //       ),
+            //       // const Spacer(),
+            //       // _LoginFormButton(
+            //       //   null,
+            //       //   "Register",
+            //       //   () => context.read<LoginCubit>().logInWithCredentials(),
+            //       // ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -74,38 +87,11 @@ class _EmailInputField extends StatelessWidget {
   }
 }
 
-class _SignInButton extends StatelessWidget {
-  const _SignInButton({
-    Key? key,
-  }) : super(key: key);
+class _LoginFormButton extends StatelessWidget {
+  const _LoginFormButton(Key? key, this._buttonText, this._onPressed) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (prev, current) => LoginState.buttonStateChanged(prev, current),
-      builder: (context, state) {
-        return ButtonTheme(
-          minWidth: 150,
-          height: 60,
-          child: TextButton(
-            onPressed: state.inputIsValid() ? () => context.read<LoginCubit>().logInWithCredentials() : null,
-            child: const Text(
-              "Sign in",
-              style: TextStyle(
-                fontSize: 22,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _RegisterButton extends StatelessWidget {
-  const _RegisterButton({
-    Key? key,
-  }) : super(key: key);
+  final String _buttonText;
+  final Function() _onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -114,15 +100,25 @@ class _RegisterButton extends StatelessWidget {
         return LoginState.buttonStateChanged(prev, current);
       },
       builder: (context, state) {
-        return ButtonTheme(
-          minWidth: 150,
-          height: 60,
+        return SizedBox(
+          height: 55,
           child: TextButton(
-            onPressed: state.inputIsValid() ? () => context.read<LoginCubit>().logInWithCredentials() : null,
-            child: const Text(
-              "Register",
-              style: TextStyle(
-                fontSize: 22,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                  side: BorderSide(color: Colors.red),
+                ),
+              ),
+            ),
+            onPressed: () {},
+            child: Center(
+              child: Text(
+                _buttonText,
+                style: TextStyle(
+                  fontSize: 22,
+                ),
               ),
             ),
           ),

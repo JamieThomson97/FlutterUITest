@@ -17,7 +17,7 @@ class LoginState extends Equatable {
   final Password password;
   final FormzStatus status;
 
-  bool inputIsValid() => true; // status == FormzStatus.valid;
+  bool inputIsValid() => status == FormzStatus.valid;
 
   @override
   List<Object> get props => [email, password, status];
