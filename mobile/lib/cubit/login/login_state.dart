@@ -11,14 +11,11 @@ class LoginState extends Equatable {
     return prev.email != current.email || prev.password != current.password;
   }
 
-  // static bool enabledButtons(LoginState prev, LoginState current) {}
-
   final Email email;
   final Password password;
   final FormzStatus status;
 
   bool inputIsValid() => status == FormzStatus.valid;
-
   @override
   List<Object> get props => [email, password, status];
 

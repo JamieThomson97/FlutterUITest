@@ -4,6 +4,7 @@ import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:meta/meta.dart';
 import 'package:vibration/model/user.dart';
+import 'package:vibration/repository/repository_interface.dart';
 
 /// Thrown if during the sign up process if a failure occurs.
 class SignUpFailure implements Exception {}
@@ -20,7 +21,7 @@ class LogOutFailure implements Exception {}
 /// {@template authentication_repository}
 /// Repository which manages user authentication.
 /// {@endtemplate}
-class AuthenticationRepository {
+class AuthenticationRepository implements IAuthenticationRepository {
   /// {@macro authentication_repository}
   AuthenticationRepository({
     CacheClient? cache,

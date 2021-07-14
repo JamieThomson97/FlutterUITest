@@ -112,7 +112,7 @@ class _LoginFormButton extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: () {},
+            onPressed: state.inputIsValid() ? () {} : null,
             child: Center(
               child: Text(
                 _buttonText,

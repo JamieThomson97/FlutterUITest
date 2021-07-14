@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:vibration/model/form.dart';
 import 'package:vibration/repository/authentication_repository.dart';
+import 'package:vibration/repository/repository_interface.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._authenticationRepository) : super(const LoginState());
 
-  final AuthenticationRepository _authenticationRepository;
+  final IAuthenticationRepository _authenticationRepository;
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
