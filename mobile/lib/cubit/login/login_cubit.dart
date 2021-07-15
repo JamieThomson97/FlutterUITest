@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:vibration/model/form.dart';
 import 'package:vibration/repository/authentication_repository.dart';
-import 'package:vibration/repository/repository_interface.dart';
 
 part 'login_state.dart';
 

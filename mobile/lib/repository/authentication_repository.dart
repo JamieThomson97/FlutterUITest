@@ -4,7 +4,6 @@ import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:meta/meta.dart';
 import 'package:vibration/model/user.dart';
-import 'package:vibration/repository/repository_interface.dart';
 
 /// Thrown if during the sign up process if a failure occurs.
 class SignUpFailure implements Exception {}
@@ -117,4 +116,16 @@ extension on firebase_auth.User {
   User get toUser {
     return User(id: uid, email: email, name: displayName, photo: photoURL);
   }
+}
+
+abstract class IAuthenticationRepository {
+  Future<void> signUp({
+    required String email,
+    required String password,
+  });
+  Future<void> logInWithEmailAndPassword({
+    required String email,
+    required String password,
+  });
+  Future<void> logOut();
 }

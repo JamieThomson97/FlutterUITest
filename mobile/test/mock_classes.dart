@@ -1,4 +1,4 @@
-import 'package:vibration/repository/repository_interface.dart';
+import 'package:vibration/repository/authentication_repository.dart';
 
 class MockAuthenticationRepository implements IAuthenticationRepository {
   @override
