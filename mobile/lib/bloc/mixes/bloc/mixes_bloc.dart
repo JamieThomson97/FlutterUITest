@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -9,7 +10,10 @@ part 'mixes_event.dart';
 part 'mixes_state.dart';
 
 class MixesBloc extends Bloc<MixesEvent, MixesState> {
-  MixesBloc(this._mixesRepository) : super(MixesLoadInProgress());
+  MixesBloc(this._mixesRepository) : super(MixesLoadInProgress()) {
+    sleep(Duration(seconds: 5));
+    add(MixesLoaded());
+  }
 
   final IMixesRepository _mixesRepository;
 
@@ -27,24 +31,5 @@ class MixesBloc extends Bloc<MixesEvent, MixesState> {
     } catch (_) {
       yield MixesLoadFailed();
     }
-  }
-}
-
-class TestMixes implements IMixesRepository {
-  @override
-  Future<List<Mix>> loadMixes() async {
-    await Future.delayed(Duration(seconds: 1));
-    var mix = Mix(
-      "id",
-      "name",
-      "producer",
-      "event",
-      "url",
-      DateTime.now(),
-      9999,
-    );
-    List<Mix> mixes = List.empty();
-    mixes.add(mix);
-    return mixes;
   }
 }
