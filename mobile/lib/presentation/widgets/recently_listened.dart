@@ -25,7 +25,7 @@ class RecentlyListened extends StatelessWidget {
                 if (index % 2 != 0) {
                   if (discIndex == 3) discIndex = 0;
                   discIndex++;
-                  return MixTile();
+                  return const SizedBox(width: 16); // TODO: should be a Mix
                 } else {
                   return const SizedBox(width: 16);
                 }

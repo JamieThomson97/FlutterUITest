@@ -26,17 +26,23 @@ class MockMixes implements IMixesRepository {
   @override
   Future<List<Mix>> loadMixes() async {
     await Future.delayed(Duration(seconds: 1));
-    List<Mix> mixes = [mockMix];
-    return mixes;
+    return getMockMixes(20);
   }
 
-  static Mix mockMix = Mix(
-    "id",
-    "name",
-    "producer",
-    "event",
-    "url",
-    DateTime.now(),
-    9999,
-  );
+  static List<Mix> getMockMixes(int number) {
+    List<Mix> mixes = [];
+    for (int i = 0; i < number; i++) {
+      var mix = Mix(
+        "id$i",
+        "name$i",
+        "producer$i",
+        "event$i",
+        "url$i",
+        DateTime.now(),
+        9999 + i,
+      );
+      mixes.add(mix);
+    }
+    return mixes;
+  }
 }

@@ -4,7 +4,7 @@ import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vibration/repository/mixes_repository.dart';
+import 'package:vibration/test/mock_classes.dart';
 
 import 'mix_tile.dart';
 
@@ -34,7 +34,14 @@ class Carousel extends StatelessWidget {
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [...List.generate(mixes.length, (index) => MixTile())],
+                    children: [
+                      ...List.generate(mixes.length * 2, (index) {
+                        if (index % 2 != 0) {
+                          return SizedBox(width: 5);
+                        }
+                        return MixTile(mixes[(index ~/ 2)]);
+                      })
+                    ],
                   ),
                 );
               } else {
@@ -45,24 +52,5 @@ class Carousel extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class MockMixes implements IMixesRepository {
-  @override
-  Future<List<Mix>> loadMixes() async {
-    await Future.delayed(Duration(seconds: 1));
-    var mix = Mix(
-      "id",
-      "name",
-      "producer",
-      "event",
-      "url",
-      DateTime.now(),
-      9999,
-    );
-    List<Mix> mixes = [];
-    mixes.add(mix);
-    return mixes;
   }
 }

@@ -2,8 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/model/mix.dart';
 
 class MixTile extends StatelessWidget {
+  MixTile(this.mix);
+  final Mix mix;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,11 +43,11 @@ class MixTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Mix Name",
+                mix.name,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Text(
-                "Artist Name",
+                mix.producer,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
             ],

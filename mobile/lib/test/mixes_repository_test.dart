@@ -20,8 +20,7 @@ void main() {
         bloc.add(MixesLoaded());
       },
       expect: () {
-        List<Mix> mixes = [MockMixes.mockMix];
-        return <MixesState>[MixesLoadSuccessful(mixes)];
+        return <MixesState>[MixesLoadSuccessful(MockMixes.getMockMixes(1))];
       },
     );
   });
