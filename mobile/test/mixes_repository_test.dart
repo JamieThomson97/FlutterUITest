@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vibration/bloc/app/app_bloc.dart';
-import 'package:vibration/bloc/mixes/bloc/mixes_bloc.dart';
-import 'package:vibration/cubit/login/login_cubit.dart';
+import 'package:vibration/bloc/mixes/mixes_bloc.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:vibration/model/mix.dart';
 

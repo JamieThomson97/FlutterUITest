@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:vibration/presentation/widgets/carousel.dart';
-import 'package:vibration/presentation/widgets/discover_carousel.dart';
 import 'package:vibration/presentation/widgets/event_tile.dart';
-import 'package:vibration/presentation/widgets/events_list.dart';
 import 'package:vibration/presentation/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';

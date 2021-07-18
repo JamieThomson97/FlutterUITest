@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'discover_item.dart';
 import 'event_tile.dart';
-import 'mix_tile.dart';
 
 class EventsList extends StatelessWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vibration/bloc/mixes/bloc/mixes_bloc.dart';
+import 'package:vibration/bloc/mixes/mixes_bloc.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:vibration/repository/mixes_repository.dart';
 
 import 'mix_tile.dart';
-import 'mix_tile_circle.dart';
 
 class Carousel extends StatelessWidget {
   const Carousel({
@@ -20,7 +19,6 @@ class Carousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool actualIsCircle = isCircle != null && isCircle!;
     return BlocProvider(
       create: (context) => MixesBloc(MockMixes()),
       child: Column(
