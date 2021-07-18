@@ -35,8 +35,7 @@ class MockMixes implements IMixesRepository {
       DateTime.now(),
       9999,
     );
-    List<Mix> mixes = [];
-    mixes.add(mix);
+    List<Mix> mixes = [mix];
     return mixes;
   }
 }
