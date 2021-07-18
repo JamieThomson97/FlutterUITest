@@ -24,16 +24,7 @@ void main() {
         bloc.add(MixesLoaded());
       },
       expect: () {
-        var mix = Mix(
-          "id",
-          "name",
-          "producer",
-          "event",
-          "url",
-          DateTime.now(),
-          9999,
-        );
-        List<Mix> mixes = [mix];
+        List<Mix> mixes = [MockMixes.mockMix];
         return <MixesState>[MixesLoadSuccessful(mixes)];
       },
     );
