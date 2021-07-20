@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "690011461196",
+    "project_id": "vibration-v2-5d83d",
+    "storage_bucket": "vibration-v2-5d83d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690011461196:android:07b6d0f58990c5cab906e9",
+        "android_client_info": {
+          "package_name": "com.example.vibration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690011461196-g7h0m9osikfbtdmi6pdf5mk38am9dvfp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAidVovMdhaWXUtQVvdO1el3RgkA4EOxZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690011461196-g7h0m9osikfbtdmi6pdf5mk38am9dvfp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "690011461196-mavnvrqvav588rlbc6ikph07adt742oa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vibration2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

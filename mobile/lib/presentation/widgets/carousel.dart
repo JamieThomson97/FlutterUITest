@@ -21,35 +21,38 @@ class Carousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MixesBloc(MockMixes()),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          HeadlineText("Latest releases"),
-          BlocBuilder<MixesBloc, MixesState>(
-            builder: (context, state) {
-              if (state is MixesLoadInProgress) {
-                return Text("In progress");
-              } else if (state is MixesLoadSuccessful) {
-                final mixes = state.mixes;
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...List.generate(mixes.length * 2, (index) {
-                        if (index % 2 != 0) {
-                          return SizedBox(width: 5);
-                        }
-                        return MixTile(mixes[(index ~/ 2)]);
-                      })
-                    ],
-                  ),
-                );
-              } else {
-                return Text("Failed");
-              }
-            },
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HeadlineText("Latest releases"),
+            BlocBuilder<MixesBloc, MixesState>(
+              builder: (context, state) {
+                if (state is MixesLoadInProgress) {
+                  return Text("In progress");
+                } else if (state is MixesLoadSuccessful) {
+                  final mixes = state.mixes;
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        ...List.generate(mixes.length * 2, (index) {
+                          if (index % 2 != 0) {
+                            return SizedBox(width: 5);
+                          }
+                          return MixTile(mixes[(index ~/ 2)]);
+                        })
+                      ],
+                    ),
+                  );
+                } else {
+                  return Text("Failed");
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
