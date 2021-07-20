@@ -34,7 +34,11 @@ class MyApp extends StatelessWidget {
                 authenticationRepository: _authenticationRepository,
               ),
           child: MaterialApp(
-            home: SignInPage(),
+            home: BlocBuilder<AppBloc, AppState>(
+              builder: (context, state) {
+                return state.user.isEmpty ? SignInPage() : HomePage();
+              },
+            ),
             theme: theme,
           )),
     );

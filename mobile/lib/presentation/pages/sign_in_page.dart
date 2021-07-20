@@ -30,9 +30,7 @@ class SignInPage extends StatelessWidget {
               Center(
                 child: SignInForm(),
               ),
-              const SizedBox(
-                height: 70,
-              ),
+              const SizedBox(height: 70),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
