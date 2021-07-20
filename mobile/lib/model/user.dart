@@ -37,4 +37,10 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [email, id, name, photo];
+
+  static User mockUser = User(
+    id: "999",
+    email: "jamie.thomson@hey.com",
+    name: "Jamie Thomson",
+  );
 }

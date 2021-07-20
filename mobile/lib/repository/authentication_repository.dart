@@ -128,4 +128,6 @@ abstract class IAuthenticationRepository {
     required String password,
   });
   Future<void> logOut();
+  User get currentUser;
+  Stream<User> get user;
 }

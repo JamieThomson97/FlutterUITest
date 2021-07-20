@@ -13,17 +13,17 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: BlocProvider(
-        create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
+        create: (_) => LoginCubit(context.read<IAuthenticationRepository>()),
         child: Container(
           color: Colors.white,
           child: Column(
             children: [
-              const Spacer(flex: 3),
+              const Spacer(flex: 4),
               const Text(
                 "Sign in",
                 style: TextStyle(
                   fontSize: 40,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
               const Spacer(flex: 4),
