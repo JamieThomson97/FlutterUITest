@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/model/user.dart';
 import 'package:vibration/repository/authentication_repository.dart';
@@ -8,10 +10,18 @@ class MockAuthenticationRepository implements IAuthenticationRepository {
 
   final bool automaticallyLoggedIn;
   @override
-  Future<void> logInWithEmailAndPassword({required String email, required String password}) {
-    // TODO: implement logInWithEmailAndPassword
-    throw UnimplementedError();
+  Future<void> logInWithEmailAndPassword({required String email, required String password}) async {
+    await Future.delayed(Duration(seconds: 1));
+    User newUser = User(
+      id: "id",
+      email: "jamie.thomson@hey.com",
+      name: "Jamie",
+      photo: "",
+    );
+    _userStream.add(newUser);
   }
+
+  StreamController<User> _userStream = new StreamController();
 
   @override
   Future<void> logOut() {
@@ -25,14 +35,17 @@ class MockAuthenticationRepository implements IAuthenticationRepository {
     throw UnimplementedError();
   }
 
-  @override
-  // TODO: implement currentUser
-  User get currentUser => automaticallyLoggedIn ? User.mockUser : User.empty;
+  User? _currentUser;
 
   @override
-  // TODO: implement user
+  // TODO: implement currentUser
+  User get currentUser => _currentUser ?? User.empty;
+
+  @override
   Stream<User> get user async* {
-    yield User.empty;
+    yield* _userStream.stream.map((user) {
+      return user;
+    });
   }
 }
 

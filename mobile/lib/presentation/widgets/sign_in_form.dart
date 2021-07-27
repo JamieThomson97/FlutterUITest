@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:vibration/cubit/login/login_cubit.dart';
 
 class SignInForm extends StatelessWidget {
@@ -112,10 +113,10 @@ class _LoginFormButton extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: state.inputIsValid() ? () {} : null,
+            onPressed: state.inputIsValid() ? _onPressed : null,
             child: Center(
               child: Text(
-                _buttonText,
+                state.status == FormzStatus.submissionInProgress ? "Please wait" : _buttonText,
                 style: TextStyle(
                   fontSize: 22,
                 ),

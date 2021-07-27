@@ -13,7 +13,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final authenticationRepository = MockAuthenticationRepository(false);
-  await authenticationRepository.user.first;
   runApp(MyApp(authenticationRepository));
 }
 
