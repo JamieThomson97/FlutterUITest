@@ -11,7 +11,7 @@ part 'mixes_state.dart';
 
 class MixesBloc extends Bloc<MixesEvent, MixesState> {
   MixesBloc(this._mixesRepository) : super(MixesLoadInProgress()) {
-    sleep(Duration(seconds: 5));
+    sleep(Duration(seconds: 1));
     add(MixesLoaded());
   }
 

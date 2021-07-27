@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TitleBar extends StatelessWidget {
-  const TitleBar({
-    Key? key,
-  }) : super(key: key);
+  final String userName;
+  const TitleBar({Key? key, required this.userName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +12,7 @@ class TitleBar extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Discover',
+            'Discover and you\'re name is $userName',
             style: Theme.of(context).textTheme.headline5,
           ),
           const Spacer(),

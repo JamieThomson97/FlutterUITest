@@ -32,13 +32,17 @@ class MyApp extends StatelessWidget {
           create: (_) => AppBloc(
                 authenticationRepository: _authenticationRepository,
               ),
-          child: MaterialApp(
-            home: BlocBuilder<AppBloc, AppState>(
-              builder: (context, state) {
-                return state.user.isEmpty ? SignInPage() : HomePage();
-              },
-            ),
-            theme: theme,
+          child: BlocBuilder<AppBloc, AppState>(
+            builder: (context, state) {
+              return MaterialApp(
+                routes: {
+                  '/': (context) => SignInPage(),
+                  '/home': (context) => HomePage(),
+                },
+                initialRoute: '/',
+                theme: theme,
+              );
+            },
           )),
     );
   }

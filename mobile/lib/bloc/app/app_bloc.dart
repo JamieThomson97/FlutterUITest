@@ -24,7 +24,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final IAuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
 
-  void _onUserChanged(User user) => add(AppUserChanged(user));
+  void _onUserChanged(User user) {
+    add(AppUserChanged(user));
+  }
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {

@@ -19,7 +19,7 @@ class SearchPage extends StatelessWidget {
         child: ListView(
       padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
       children: <Widget>[
-        TitleBar(),
+        TitleBar(userName: "Jamie"),
         listSpacer,
         DiscoverCarousel(),
         listSpacer,
