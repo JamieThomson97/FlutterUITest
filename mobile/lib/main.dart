@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 routes: {
-                  '/': (context) => SignInPage(),
+                  '/': (context) => NowPlayingPage(),
                   '/home': (context) => HomePage(),
                 },
                 initialRoute: '/',
