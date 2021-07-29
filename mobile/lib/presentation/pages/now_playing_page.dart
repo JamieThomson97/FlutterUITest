@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
 class NowPlayingPage extends StatelessWidget {
   const NowPlayingPage({Key? key}) : super(key: key);
 
-// horrible horrible hack
-  static ScrollController _controller = ScrollController();
-  static SongLengthScrollController songLength = SongLengthScrollController(null, _controller);
+  static ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,72 +21,72 @@ class NowPlayingPage extends StatelessWidget {
       ),
       alignment: Alignment.centerRight,
       padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-      child: Column(
-        children: [
-          SizedBox(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-              alignment: Alignment.centerLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    color: Colors.white,
-                    child: Text(
-                      "Kaytranada",
-                      style: Theme.of(context).textTheme.headline5,
-                      textAlign: TextAlign.left,
+      child: BlocProvider(
+        create: (context) => NowPlayingScrollCubit(_scrollController),
+        child: Column(
+          children: [
+            SizedBox(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      child: Text(
+                        "Kaytranada",
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.left,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: Text(
-                      "Pitchfork 2018 - Paris",
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.left,
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
-                ],
+                    Container(
+                      color: Colors.white,
+                      child: Text(
+                        "Pitchfork 2018 - Paris",
+                        style: Theme.of(context).textTheme.headline6,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              height: 300,
+            ),
+            SizedBox(
+              height: 200,
+            ),
+            BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+              builder: (context, state) {
+                return Text(updatePercentage(state.songPercentage, 300));
+              },
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Container(
+              height: 50,
+              child: NowPlayingScrollable(
+                scrollController: _scrollController,
               ),
             ),
-            height: 300,
-          ),
-          SizedBox(
-            height: 200,
-          ),
-          songLength,
-          SizedBox(
-            height: 50,
-          ),
-          Container(
-              height: 50,
-              child: ListView.builder(
-                controller: songLength.controller,
-                scrollDirection: Axis.horizontal,
-                itemCount: 585,
-                itemBuilder: ((BuildContext context, int index) {
-                  if (index < 600 * 0.065 || index > 600 * 0.91) {
-                    return Container(
-                      width: 5,
-                    );
-                  }
-                  if (index & 2 == 0)
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.transparent,
-                      height: 30,
-                      width: 1,
-                      // child: Text('Item: $index'),
-                    );
-                  else
-                    return NowPlayingScrollable();
-                }),
-              )),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  String updatePercentage(double percentage, int songLength) {
+    percentage = percentage < 0 ? 0 : percentage;
+    var seconds = (songLength * percentage).round();
+    if (seconds > songLength) seconds = songLength;
+    int minutes = (seconds / 60).truncate();
+    var remainingSeconds = seconds - (minutes * 60);
+    String minsString = minutes < 10 ? "0$minutes" : minutes.toString();
+    String minsSecs = remainingSeconds < 10 ? "0$remainingSeconds" : remainingSeconds.toString();
+    return "$minsString:$minsSecs";
   }
 }
