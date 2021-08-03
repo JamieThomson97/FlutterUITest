@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
+import 'package:vibration/presentation/widgets/marquee.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
 class NowPlayingPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class NowPlayingPage extends StatelessWidget {
         create: (context) => NowPlayingScrollCubit(_scrollController),
         child: SafeArea(
           child: Container(
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(6),
             child: Stack(children: [
               BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
                 builder: (context, state) {
@@ -43,10 +44,13 @@ class NowPlayingPage extends StatelessWidget {
                         children: [
                           Container(
                             color: Colors.white,
-                            child: Text(
-                              "Kaytranada",
-                              style: Theme.of(context).textTheme.headline5,
-                              textAlign: TextAlign.left,
+                            child: MarqueeWidget(
+                              direction: Axis.horizontal,
+                              text: Text(
+                                "Kaytranada",
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              length: "Kaytranada".length,
                             ),
                           ),
                           SizedBox(
@@ -54,10 +58,13 @@ class NowPlayingPage extends StatelessWidget {
                           ),
                           Container(
                             color: Colors.white,
-                            child: Text(
-                              "Pitchfork 2018 - Paris",
-                              style: Theme.of(context).textTheme.headline6,
-                              textAlign: TextAlign.left,
+                            child: MarqueeWidget(
+                              text: Text(
+                                "Pitchfork 20sdsakdsdposakdsakdkasdksp18 - Paris",
+                                style: Theme.of(context).textTheme.headline6,
+                                textAlign: TextAlign.left,
+                              ),
+                              length: "Pitchfork 20sdsakdsdposakdsakdkasdksp18 - Paris".length,
                             ),
                           ),
                         ],
