@@ -12,71 +12,87 @@ class NowPlayingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
-        ),
-      ),
-      alignment: Alignment.centerRight,
-      padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-      child: BlocProvider(
+    return BlocProvider(
         create: (context) => NowPlayingScrollCubit(_scrollController),
-        child: Column(
-          children: [
-            SizedBox(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      child: Text(
-                        "Kaytranada",
-                        style: Theme.of(context).textTheme.headline5,
-                        textAlign: TextAlign.left,
+        child: SafeArea(
+          child: Container(
+            padding: EdgeInsets.all(4),
+            child: Stack(children: [
+              BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+                builder: (context, state) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
+                        alignment: Alignment(state.songPercentage.abs(), 0),
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: Text(
-                        "Pitchfork 2018 - Paris",
-                        style: Theme.of(context).textTheme.headline6,
-                        textAlign: TextAlign.left,
+                    padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                  );
+                },
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            color: Colors.white,
+                            child: Text(
+                              "Kaytranada",
+                              style: Theme.of(context).textTheme.headline5,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            color: Colors.white,
+                            child: Text(
+                              "Pitchfork 2018 - Paris",
+                              style: Theme.of(context).textTheme.headline6,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                    height: 300,
+                  ),
+                  SizedBox(
+                    height: 200,
+                  ),
+                  BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+                    builder: (context, state) {
+                      return Container(
+                        color: Colors.white,
+                        child: Text(
+                          updatePercentage(state.songPercentage, 300),
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    height: 50,
+                    child: NowPlayingScrollable(
+                      scrollController: _scrollController,
+                    ),
+                  ),
+                ],
               ),
-              height: 300,
-            ),
-            SizedBox(
-              height: 200,
-            ),
-            BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
-              builder: (context, state) {
-                return Text(updatePercentage(state.songPercentage, 300));
-              },
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Container(
-              height: 50,
-              child: NowPlayingScrollable(
-                scrollController: _scrollController,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ]),
+          ),
+        ));
   }
 
   String updatePercentage(double percentage, int songLength) {

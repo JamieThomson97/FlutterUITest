@@ -3,8 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 
-import 'SongLengthScrollController.dart';
-
 class NowPlayingScrollable extends StatelessWidget {
   const NowPlayingScrollable({
     Key? key,
@@ -16,6 +14,7 @@ class NowPlayingScrollable extends StatelessWidget {
   Widget build(BuildContext context) {
     int itemCount = 585;
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
       controller: scrollController,
       scrollDirection: Axis.horizontal,
       itemCount: itemCount,
@@ -35,6 +34,10 @@ class NowPlayingScrollable extends StatelessWidget {
           );
         else
           return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+            buildWhen: (prevState, currentState) {
+              return _isOver(itemCount, index, prevState.songPercentage) !=
+                  _isOver(itemCount, index, currentState.songPercentage);
+            },
             builder: (context, state) {
               return Container(
                 alignment: Alignment.center,
@@ -49,6 +52,10 @@ class NowPlayingScrollable extends StatelessWidget {
   }
 
   static bool areCurrentlyOver = false;
+
+  static bool _isOver(int itemCount, int index, double percentage) {
+    return percentage * itemCount > index;
+  }
 
   static Color _getColour(int itemCount, int index, double percentage) {
     var isOver = percentage * itemCount > index;
