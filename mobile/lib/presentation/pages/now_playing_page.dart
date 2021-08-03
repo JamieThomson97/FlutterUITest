@@ -60,11 +60,11 @@ class NowPlayingPage extends StatelessWidget {
                             color: Colors.white,
                             child: MarqueeWidget(
                               text: Text(
-                                "Pitchfork 20sdsakdsdposakdsakdkasdksp18 - Paris",
+                                "Pitchfork 2018 - Paris",
                                 style: Theme.of(context).textTheme.headline6,
                                 textAlign: TextAlign.left,
                               ),
-                              length: "Pitchfork 20sdsakdsdposakdsakdkasdksp18 - Paris".length,
+                              length: "Pitchfork 2018 - Paris".length,
                             ),
                           ),
                         ],
@@ -90,7 +90,8 @@ class NowPlayingPage extends StatelessWidget {
                     height: 50,
                   ),
                   Container(
-                    height: 50,
+                    height: 100,
+                    padding: EdgeInsets.zero,
                     child: NowPlayingScrollable(
                       scrollController: _scrollController,
                     ),

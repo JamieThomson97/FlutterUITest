@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
+import 'dart:math' as math;
 
 class NowPlayingScrollable extends StatelessWidget {
   const NowPlayingScrollable({
@@ -20,17 +21,21 @@ class NowPlayingScrollable extends StatelessWidget {
       itemCount: itemCount,
       itemBuilder: ((BuildContext context, int index) {
         if (index < 600 * 0.065 || index > 600 * 0.91) {
-          return Container(
-            width: 5,
+          return Align(
+            child: Container(
+              width: 5,
+            ),
           );
         }
         if (index & 2 == 0)
-          return Container(
-            alignment: Alignment.center,
-            color: Colors.transparent,
-            height: 30,
-            width: 0.5,
-            // child: Text('Item: '),
+          return Align(
+            child: Container(
+              alignment: Alignment.center,
+              color: Colors.transparent,
+              height: 30,
+              width: 0.5,
+              // child: Text('Item: '),
+            ),
           );
         else
           return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
@@ -39,11 +44,19 @@ class NowPlayingScrollable extends StatelessWidget {
                   _isOver(itemCount, index, currentState.songPercentage);
             },
             builder: (context, state) {
-              return Container(
-                alignment: Alignment.center,
-                color: _getColour(itemCount, index, state.songPercentage),
-                height: 30,
-                width: 1,
+              int trig = (index / 50).floor();
+              int dunno = trig % 2;
+              double height = index % 50;
+              if (dunno == 1) height = 50 - height;
+              height = height + 30;
+              print("Height: $height");
+              return Align(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  color: _getColour(itemCount, index, state.songPercentage),
+                  height: height,
+                  width: 1,
+                ),
               );
             },
           );
