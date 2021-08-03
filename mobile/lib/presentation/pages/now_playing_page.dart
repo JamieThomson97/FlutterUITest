@@ -81,7 +81,7 @@ class NowPlayingPage extends StatelessWidget {
                         color: Colors.white,
                         child: Text(
                           updatePercentage(state.songPercentage, 300),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                       );
                     },
@@ -91,7 +91,6 @@ class NowPlayingPage extends StatelessWidget {
                   ),
                   Container(
                     height: 100,
-                    padding: EdgeInsets.zero,
                     child: NowPlayingScrollable(
                       scrollController: _scrollController,
                     ),
@@ -111,6 +110,6 @@ class NowPlayingPage extends StatelessWidget {
     var remainingSeconds = seconds - (minutes * 60);
     String minsString = minutes < 10 ? "0$minutes" : minutes.toString();
     String minsSecs = remainingSeconds < 10 ? "0$remainingSeconds" : remainingSeconds.toString();
-    return "$minsString:$minsSecs";
+    return "$minsString:$minsSecs | 05:00";
   }
 }

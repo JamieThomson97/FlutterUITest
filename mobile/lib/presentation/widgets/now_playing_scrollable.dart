@@ -20,11 +20,9 @@ class NowPlayingScrollable extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: itemCount,
       itemBuilder: ((BuildContext context, int index) {
-        if (index < 600 * 0.065 || index > 600 * 0.91) {
-          return Align(
-            child: Container(
-              width: 5,
-            ),
+        if (index == 1 || index == itemCount - 1) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
           );
         }
         if (index & 2 == 0)
