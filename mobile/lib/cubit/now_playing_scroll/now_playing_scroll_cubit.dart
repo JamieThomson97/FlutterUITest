@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:vibration/presentation/pages/now_playing_page.dart';
 
 part 'now_playing_scroll_state.dart';
 
 class NowPlayingScrollCubit extends Cubit<NowPlayingScrollState> {
-  NowPlayingScrollCubit(this._scrollController) : super(NowPlayingScrollState(songPercentage: 0)) {
+  NowPlayingScrollCubit(this._scrollController, int songLenth)
+      : super(NowPlayingScrollState(songPercentage: 0, songLength: songLenth)) {
     _scrollController.addListener(_whenScrolled);
   }
 

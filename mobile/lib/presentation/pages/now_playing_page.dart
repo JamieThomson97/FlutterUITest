@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
+import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
 import 'package:vibration/presentation/widgets/marquee.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
@@ -10,11 +11,13 @@ class NowPlayingPage extends StatelessWidget {
   const NowPlayingPage({Key? key}) : super(key: key);
 
   static ScrollController _scrollController = ScrollController();
+  static Mix mix = Mix("id", "name", "Kaytranada", "Pitchfork 2018 - Paris",
+      "resources/Now_Playing_Screen/KaytranadaLive.jpeg", DateTime.now(), 300);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => NowPlayingScrollCubit(_scrollController),
+        create: (context) => NowPlayingScrollCubit(_scrollController, mix.length),
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.all(6),
@@ -25,7 +28,7 @@ class NowPlayingPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
+                        image: AssetImage(mix.imageUrl),
                         alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
                       ),
                     ),
@@ -47,7 +50,7 @@ class NowPlayingPage extends StatelessWidget {
                             child: MarqueeWidget(
                               direction: Axis.horizontal,
                               text: Text(
-                                "Kaytranada",
+                                mix.producer,
                                 style: Theme.of(context).textTheme.headline5,
                               ),
                             ),
@@ -59,8 +62,21 @@ class NowPlayingPage extends StatelessWidget {
                             color: Colors.white,
                             child: MarqueeWidget(
                               text: Text(
-                                "Pitchfork 2018 - Paris",
+                                mix.event,
                                 style: Theme.of(context).textTheme.headline6,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            color: Colors.white,
+                            child: MarqueeWidget(
+                              text: Text(
+                                mix.dateUploaded.toString(),
+                                style: Theme.of(context).textTheme.headline5,
                                 textAlign: TextAlign.left,
                               ),
                             ),
@@ -78,7 +94,7 @@ class NowPlayingPage extends StatelessWidget {
                       return Container(
                         color: Colors.white,
                         child: Text(
-                          updatePercentage(state.songPercentage, 300),
+                          "${updatePercentage(state.songPercentage, mix.length)} | ${state.songLengthString}",
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       );
@@ -100,7 +116,7 @@ class NowPlayingPage extends StatelessWidget {
         ));
   }
 
-  String updatePercentage(double percentage, int songLength) {
+  static String updatePercentage(double percentage, int songLength) {
     percentage = percentage < 0 ? 0 : percentage;
     var seconds = (songLength * percentage).round();
     if (seconds > songLength) seconds = songLength;
@@ -108,6 +124,6 @@ class NowPlayingPage extends StatelessWidget {
     var remainingSeconds = seconds - (minutes * 60);
     String minsString = minutes < 10 ? "0$minutes" : minutes.toString();
     String minsSecs = remainingSeconds < 10 ? "0$remainingSeconds" : remainingSeconds.toString();
-    return "$minsString:$minsSecs | 05:00";
+    return "$minsString:$minsSecs";
   }
 }
