@@ -26,7 +26,7 @@ class NowPlayingPage extends StatelessWidget {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
-                        alignment: Alignment(state.songPercentage.abs(), 0),
+                        alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
                       ),
                     ),
                     padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
@@ -50,7 +50,6 @@ class NowPlayingPage extends StatelessWidget {
                                 "Kaytranada",
                                 style: Theme.of(context).textTheme.headline5,
                               ),
-                              length: "Kaytranada".length,
                             ),
                           ),
                           SizedBox(
@@ -64,7 +63,6 @@ class NowPlayingPage extends StatelessWidget {
                                 style: Theme.of(context).textTheme.headline6,
                                 textAlign: TextAlign.left,
                               ),
-                              length: "Pitchfork 2018 - Paris".length,
                             ),
                           ),
                         ],

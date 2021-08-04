@@ -6,11 +6,9 @@ class MarqueeWidget extends StatefulWidget {
   final Text text;
   final Axis direction;
   final Duration backDuration, pauseDuration;
-  final int length;
 
   MarqueeWidget({
     required this.text,
-    required this.length,
     this.direction: Axis.horizontal,
     this.backDuration: const Duration(milliseconds: 800),
     this.pauseDuration: const Duration(milliseconds: 800),
@@ -19,17 +17,19 @@ class MarqueeWidget extends StatefulWidget {
   @override
   _MarqueeWidgetState createState() => _MarqueeWidgetState(
         text,
-        Duration(seconds: (1 / 16 * this.length).round()),
       );
 }
 
 class _MarqueeWidgetState extends State<MarqueeWidget> {
   late ScrollController scrollController;
 
-  _MarqueeWidgetState(this.text, this.animationDuration);
+  _MarqueeWidgetState(this.text) {
+    String text = this.text.data.toString();
+    this.animationDuration = Duration(seconds: (1 / 16 * text.length).round());
+  }
 
   Text text;
-  Duration animationDuration;
+  late Duration animationDuration;
 
   @override
   void initState() {
