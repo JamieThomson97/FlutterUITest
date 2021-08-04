@@ -9,7 +9,15 @@ class Mix extends Equatable {
   final DateTime dateUploaded;
   final int length;
 
-  Mix(this.id, this.name, this.producer, this.event, this.imageUrl, this.dateUploaded, this.length);
+  Mix(
+    this.id,
+    this.name,
+    this.producer,
+    this.event,
+    this.imageUrl,
+    this.dateUploaded,
+    this.length,
+  );
 
   @override
   List<Object> get props => [id];

@@ -36,8 +36,9 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 routes: {
-                  '/': (context) => NowPlayingPage(),
+                  '/': (context) => SignInPage(),
                   '/home': (context) => HomePage(),
+                  '/nowPlaying': (context) => NowPlayingPage(),
                 },
                 initialRoute: '/',
                 theme: theme,

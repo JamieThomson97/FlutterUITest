@@ -1,22 +1,22 @@
 part of 'now_playing_scroll_cubit.dart';
 
 class NowPlayingScrollState {
-  NowPlayingScrollState({required this.songPercentage, required this.songLength}) {
-    songLengthString = updatePercentage(100, songLength);
+  NowPlayingScrollState({required this.songPercentage, required this.mix}) {
+    songLengthString = updatePercentage(100, mix.length);
   }
 
   @override
   List<Object> get props => [];
 
   final double songPercentage;
-  final int songLength;
+  late Mix mix;
 
   late String songLengthString;
 
-  NowPlayingScrollState copyWith({double? songPercentage, int? songLength}) {
+  NowPlayingScrollState copyWith({double? songPercentage}) {
     return NowPlayingScrollState(
       songPercentage: songPercentage ?? this.songPercentage,
-      songLength: songLength ?? this.songLength,
+      mix: this.mix,
     );
   }
 

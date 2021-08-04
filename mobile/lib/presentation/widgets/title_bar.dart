@@ -12,7 +12,7 @@ class TitleBar extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Discover and you\'re name is $userName',
+            'Hi $userName',
             style: Theme.of(context).textTheme.headline5,
           ),
           const Spacer(),

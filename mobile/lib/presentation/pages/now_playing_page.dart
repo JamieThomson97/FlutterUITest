@@ -17,7 +17,7 @@ class NowPlayingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => NowPlayingScrollCubit(_scrollController, mix.length),
+        create: (context) => NowPlayingScrollCubit(_scrollController, mix),
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.all(6),

@@ -109,11 +109,11 @@ class _LoginFormButton extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40.0),
-                  side: BorderSide(color: Colors.red),
+                  side: BorderSide(color: Colors.blue),
                 ),
               ),
             ),
-            onPressed: state.inputIsValid() ? _onPressed : null,
+            onPressed: state.inputIsValid() ? _onPressed : _onPressed, // Todo: duh...
             child: Center(
               child: Text(
                 state.status == FormzStatus.submissionInProgress ? "Please wait" : _buttonText,

@@ -26,7 +26,7 @@ class Carousel extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeadlineText("Latest releases"),
+            HeadlineText(title),
             BlocBuilder<MixesBloc, MixesState>(
               builder: (context, state) {
                 if (state is MixesLoadInProgress) {
