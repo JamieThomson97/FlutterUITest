@@ -11,31 +11,40 @@ class NowPlayingPage extends StatelessWidget {
   const NowPlayingPage({Key? key}) : super(key: key);
 
   static ScrollController _scrollController = ScrollController();
-  static Mix mix = Mix("id", "name", "Kaytranada", "Pitchfork 2018 - Paris",
-      "resources/Now_Playing_Screen/KaytranadaLive.jpeg", DateTime.now(), 300);
+  static Mix mix = Mix(
+    "id",
+    "name",
+    "Kaytranada",
+    "Pitchfork 2018 - Paris",
+    "resources/Now_Playing_Screen/KaytranadaLive.jpeg",
+    DateTime.now(),
+    300,
+    "05:00",
+  );
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => NowPlayingCubit(_scrollController, mix),
+        create: (context) => NowPlayingCubit(_scrollController),
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.all(6),
             child: Stack(children: [
-              BlocBuilder<NowPlayingCubit, NowPlayingState>(
-                builder: (context, state) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(mix.imageUrl),
-                        alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+              BlocBuilder<NowPlayingCubit, NowPlayingState>(builder: (context, state) {
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(mix.imageUrl),
+                      alignment: Alignment(
+                        state is NowPlayingEngagedState ? state.songPercentage.abs() * 0.4 : 0.4,
+                        0,
                       ),
                     ),
-                    padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  );
-                },
-              ),
+                  ),
+                  padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                );
+              }),
               Column(
                 children: [
                   SizedBox(
@@ -91,13 +100,16 @@ class NowPlayingPage extends StatelessWidget {
                   ),
                   BlocBuilder<NowPlayingCubit, NowPlayingState>(
                     builder: (context, state) {
-                      return Container(
-                        color: Colors.white,
-                        child: Text(
-                          "${updatePercentage(state.songPercentage, mix.length)} | ${state.songLengthString}",
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      );
+                      if (state is NowPlayingEngagedState) {
+                        return Container(
+                          color: Colors.white,
+                          child: Text(
+                            "${updatePercentage(state.songPercentage, mix.length)} | ${state.mix.songLengthString}",
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        );
+                      }
+                      throw new NowPlayingError("NowPlayingPage112");
                     },
                   ),
                   SizedBox(

@@ -38,24 +38,29 @@ class NowPlayingScrollable extends StatelessWidget {
         else
           return BlocBuilder<NowPlayingCubit, NowPlayingState>(
             buildWhen: (prevState, currentState) {
-              return _isOver(itemCount, index, prevState.songPercentage) !=
-                  _isOver(itemCount, index, currentState.songPercentage);
+              if (prevState is NowPlayingEngagedState && currentState is NowPlayingEngagedState)
+                return _isOver(itemCount, index, prevState.songPercentage) !=
+                    _isOver(itemCount, index, currentState.songPercentage);
+              throw new NowPlayingError("NowPlayingScrollable44");
             },
             builder: (context, state) {
-              int trig = (index / 50).floor();
-              int dunno = trig % 2;
-              double height = index % 50;
-              if (dunno == 1) height = 50 - height;
-              height = height + 30;
-              print("Height: $height");
-              return Align(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  color: _getColour(itemCount, index, state.songPercentage),
-                  height: height,
-                  width: 1,
-                ),
-              );
+              if (state is NowPlayingEngagedState) {
+                int trig = (index / 50).floor();
+                int dunno = trig % 2;
+                double height = index % 50;
+                if (dunno == 1) height = 50 - height;
+                height = height + 30;
+                print("Height: $height");
+                return Align(
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    color: _getColour(itemCount, index, state.songPercentage),
+                    height: height,
+                    width: 1,
+                  ),
+                );
+              }
+              throw new NowPlayingError("Scrollable63");
             },
           );
       }),

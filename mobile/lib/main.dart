@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                   '/home': (context) => HomePage(),
                   '/nowPlaying': (context) => NowPlayingPage(),
                 },
-                initialRoute: '/',
+                initialRoute: '/nowPlaying',
                 theme: theme,
               );
             },

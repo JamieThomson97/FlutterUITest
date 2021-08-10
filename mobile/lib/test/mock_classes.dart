@@ -67,6 +67,7 @@ class MockMixes implements IMixesRepository {
         "url$i",
         DateTime.now(),
         9999 + i,
+        "99:99",
       );
       mixes.add(mix);
     }

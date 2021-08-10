@@ -8,6 +8,7 @@ class Mix extends Equatable {
   final String imageUrl;
   final DateTime dateUploaded;
   final int length;
+  final String songLengthString;
 
   Mix(
     this.id,
@@ -17,6 +18,7 @@ class Mix extends Equatable {
     this.imageUrl,
     this.dateUploaded,
     this.length,
+    this.songLengthString,
   );
 
   @override

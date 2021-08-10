@@ -1,22 +1,27 @@
 part of 'now_playing_cubit.dart';
 
-class NowPlayingState {
-  NowPlayingState({required this.songPercentage, required this.mix}) {
-    songLengthString = updatePercentage(100, mix.length);
-  }
+abstract class NowPlayingState {}
 
+class NowPlayingInitialState extends NowPlayingState {
+  NowPlayingInitialState();
   @override
-  List<Object> get props => [];
+  NowPlayingState copyWith() {
+    // TODO: implement copyWith
+    throw UnimplementedError();
+  }
+}
 
-  final double songPercentage;
-  late Mix mix;
+class NowPlayingEngagedState extends NowPlayingState {
+  NowPlayingEngagedState(this.mix);
+  Mix mix;
+  double songPercentage = 0;
 
-  late String songLengthString;
+  NowPlayingEngagedState.progressed(this.mix, this.songPercentage);
 
-  NowPlayingState copyWith({double? songPercentage}) {
-    return NowPlayingState(
-      songPercentage: songPercentage ?? this.songPercentage,
-      mix: this.mix,
+  NowPlayingEngagedState copyWith(double? songPercentage, Mix? mix) {
+    return NowPlayingEngagedState.progressed(
+      mix ?? this.mix,
+      songPercentage ?? this.songPercentage,
     );
   }
 
@@ -30,4 +35,30 @@ class NowPlayingState {
     String minsSecs = remainingSeconds < 10 ? "0$remainingSeconds" : remainingSeconds.toString();
     return "$minsString:$minsSecs";
   }
+}
+
+// class NowPlayingState {
+//   NowPlayingState({required this.songPercentage, required this.mix}) {
+//     songLengthString = updatePercentage(100, mix.length);
+//   }
+
+//   @override
+//   List<Object> get props => [];
+
+//   final double songPercentage;
+//   late Mix mix;
+
+//   late String songLengthString;
+
+//   NowPlayingState copyWith({double? songPercentage}) {
+//     return NowPlayingState(
+//       songPercentage: songPercentage ?? this.songPercentage,
+//       mix: this.mix,
+//     );
+//   }
+// }
+
+class NowPlayingError extends Error {
+  final String message;
+  NowPlayingError(this.message);
 }
