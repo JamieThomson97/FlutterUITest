@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
+import 'package:vibration/cubit/now_playing_scroll/now_playing_cubit.dart';
 import 'dart:math' as math;
 
 class NowPlayingScrollable extends StatelessWidget {
@@ -36,7 +36,7 @@ class NowPlayingScrollable extends StatelessWidget {
             ),
           );
         else
-          return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+          return BlocBuilder<NowPlayingCubit, NowPlayingState>(
             buildWhen: (prevState, currentState) {
               return _isOver(itemCount, index, prevState.songPercentage) !=
                   _isOver(itemCount, index, currentState.songPercentage);

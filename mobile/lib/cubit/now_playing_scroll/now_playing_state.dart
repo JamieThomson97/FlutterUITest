@@ -1,7 +1,7 @@
-part of 'now_playing_scroll_cubit.dart';
+part of 'now_playing_cubit.dart';
 
-class NowPlayingScrollState {
-  NowPlayingScrollState({required this.songPercentage, required this.mix}) {
+class NowPlayingState {
+  NowPlayingState({required this.songPercentage, required this.mix}) {
     songLengthString = updatePercentage(100, mix.length);
   }
 
@@ -13,8 +13,8 @@ class NowPlayingScrollState {
 
   late String songLengthString;
 
-  NowPlayingScrollState copyWith({double? songPercentage}) {
-    return NowPlayingScrollState(
+  NowPlayingState copyWith({double? songPercentage}) {
+    return NowPlayingState(
       songPercentage: songPercentage ?? this.songPercentage,
       mix: this.mix,
     );

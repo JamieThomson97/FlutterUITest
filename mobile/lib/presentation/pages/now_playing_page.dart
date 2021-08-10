@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
+import 'package:vibration/cubit/now_playing_scroll/now_playing_cubit.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
 import 'package:vibration/presentation/widgets/marquee.dart';
@@ -17,12 +17,12 @@ class NowPlayingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => NowPlayingScrollCubit(_scrollController, mix),
+        create: (context) => NowPlayingCubit(_scrollController, mix),
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.all(6),
             child: Stack(children: [
-              BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+              BlocBuilder<NowPlayingCubit, NowPlayingState>(
                 builder: (context, state) {
                   return Container(
                     decoration: BoxDecoration(
@@ -89,7 +89,7 @@ class NowPlayingPage extends StatelessWidget {
                   SizedBox(
                     height: 200,
                   ),
-                  BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+                  BlocBuilder<NowPlayingCubit, NowPlayingState>(
                     builder: (context, state) {
                       return Container(
                         color: Colors.white,

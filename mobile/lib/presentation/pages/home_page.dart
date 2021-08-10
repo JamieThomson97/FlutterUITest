@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/app/app_bloc.dart';
+import 'package:vibration/cubit/now_playing_scroll/now_playing_cubit.dart';
 import 'package:vibration/model/user.dart';
 import 'package:vibration/presentation/widgets/carousel.dart';
 import 'package:vibration/presentation/widgets/discover_carousel.dart';
@@ -12,30 +13,31 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-        child: ListView(
-      padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
-      children: <Widget>[
-        BlocBuilder<AppBloc, AppState>(
-          builder: (context, state) {
-            return TitleBar(userName: state.user.name.toString());
-          },
-        ),
-        ListSpacer(),
-        DiscoverCarousel(),
-        ListSpacer(),
-        Carousel(
-          title: "Recently Listened",
-        ),
-        ListSpacer(),
-        Carousel(
-          title: "We think you'll like",
-        ),
-        ListSpacer(),
-        Carousel(
-          title: "Producers",
-          isCircle: true,
-        ),
-      ],
-    ));
+      child: ListView(
+        padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+        children: <Widget>[
+          BlocBuilder<AppBloc, AppState>(
+            builder: (context, state) {
+              return TitleBar(userName: state.user.name.toString());
+            },
+          ),
+          ListSpacer(),
+          DiscoverCarousel(),
+          ListSpacer(),
+          Carousel(
+            title: "Recently Listened",
+          ),
+          ListSpacer(),
+          Carousel(
+            title: "We think you'll like",
+          ),
+          ListSpacer(),
+          Carousel(
+            title: "Producers",
+            isCircle: true,
+          ),
+        ],
+      ),
+    );
   }
 }
