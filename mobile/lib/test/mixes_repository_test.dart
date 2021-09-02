@@ -5,23 +5,23 @@ import 'package:vibration/model/mix.dart';
 
 import 'mock_classes.dart';
 
-void main() {
-  group("LoginCubit", () {
-    late MixesBloc mixesBloc;
+// void main() {
+//   group("LoginCubit", () {
+//     late MixesBloc mixesBloc;
 
-    setUp(() {
-      mixesBloc = MixesBloc(MockMixes());
-    });
+//     setUp(() {
+//       mixesBloc = MixesBloc(MockMixes());
+//     });
 
-    blocTest<MixesBloc, MixesState>(
-      'Test Mixes Successful',
-      build: () => mixesBloc,
-      act: (bloc) {
-        bloc.add(MixesLoaded());
-      },
-      expect: () {
-        return <MixesState>[MixesLoadSuccessful(MockMixes.getMockMixes(1))];
-      },
-    );
-  });
-}
+//     blocTest<MixesBloc, MixesState>(
+//       'Test Mixes Successful',
+//       build: () => mixesBloc,
+//       act: (bloc) {
+//         bloc.add(MixesLoaded());
+//       },
+//       expect: () {
+//         return <MixesState>[MixesLoadSuccessful(MockMixes.getMockMixes(1))];
+//       },
+//     );
+//   });
+// }

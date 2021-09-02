@@ -23,6 +23,22 @@ class MyApp extends StatelessWidget {
   }) : super(key: key);
 
   final IAuthenticationRepository _authenticationRepository;
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +52,98 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 routes: {
-                  '/': (context) => SignInPage(),
-                  '/home': (context) => HomePage(),
                   '/nowPlaying': (context) => NowPlayingPage(),
                 },
-                initialRoute: '/',
                 theme: theme,
+                home: HomeWidget(),
               );
             },
           )),
+    );
+  }
+}
+
+class HomeWidget extends StatefulWidget {
+  const HomeWidget({Key? key}) : super(key: key);
+
+  @override
+  State<HomeWidget> createState() => _HomeWidgetState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _HomeWidgetState extends State<HomeWidget> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
+    Text(
+      'Index 2: Lightbulb',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Search',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 4: Library',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: _widgetOptions.elementAt(_selectedIndex),
+            ),
+          ),
+          Container(
+            height: 80,
+            color: Colors.red,
+            child: SizedBox.expand(
+              child: Center(
+                child: Text("Now playing"),
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.grey,
+        selectedFontSize: 0,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.lightbulb_outlined),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search_rounded,
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_books_rounded),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

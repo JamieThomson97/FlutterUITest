@@ -21,6 +21,9 @@ ThemeData theme = ThemeData(
       fontStyle: FontStyle.italic,
     ),
     headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-    bodyText2: TextStyle(fontSize: 13.0, fontFamily: 'Hind'),
+    bodyText2: TextStyle(
+      fontSize: 13.0,
+      fontFamily: 'Hind',
+    ),
   ),
 );

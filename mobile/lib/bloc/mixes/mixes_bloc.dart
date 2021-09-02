@@ -10,23 +10,24 @@ part 'mixes_event.dart';
 part 'mixes_state.dart';
 
 class MixesBloc extends Bloc<MixesEvent, MixesState> {
-  MixesBloc(this._mixesRepository) : super(MixesLoadInProgress()) {
+  MixesBloc(this._mixesRepository, this._collection) : super(MixesLoadInProgress()) {
     sleep(Duration(seconds: 1));
-    add(MixesLoaded());
+    add(MixesLoaded(_collection));
   }
 
   final IMixesRepository _mixesRepository;
+  final String _collection;
 
   @override
   Stream<MixesState> mapEventToState(
     MixesEvent event,
   ) async* {
-    if (event is MixesLoaded) yield* _mapMixesLoadedToState();
+    if (event is MixesLoaded) yield* _mapMixesLoadedToState(event.collection);
   }
 
-  Stream<MixesState> _mapMixesLoadedToState() async* {
+  Stream<MixesState> _mapMixesLoadedToState(String collection) async* {
     try {
-      final mixes = await _mixesRepository.loadMixes();
+      final mixes = await _mixesRepository.loadMixes(collection);
       yield MixesLoadSuccessful(mixes);
     } catch (_) {
       yield MixesLoadFailed();

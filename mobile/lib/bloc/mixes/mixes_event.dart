@@ -7,4 +7,8 @@ abstract class MixesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class MixesLoaded extends MixesEvent {}
+class MixesLoaded extends MixesEvent {
+  MixesLoaded(this.collection);
+
+  final String collection;
+}

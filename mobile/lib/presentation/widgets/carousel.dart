@@ -20,7 +20,7 @@ class Carousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MixesBloc(MockMixes()),
+      create: (context) => MixesBloc(MockMixes(), title),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
         child: Column(

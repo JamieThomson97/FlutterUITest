@@ -51,18 +51,18 @@ class MockAuthenticationRepository implements IAuthenticationRepository {
 
 class MockMixes implements IMixesRepository {
   @override
-  Future<List<Mix>> loadMixes() async {
+  Future<List<Mix>> loadMixes(String collection) async {
     await Future.delayed(Duration(seconds: 1));
-    return getMockMixes(20);
+    return getMockMixes(20, collection);
   }
 
-  static List<Mix> getMockMixes(int number) {
+  static List<Mix> getMockMixes(int number, String collection) {
     List<Mix> mixes = [];
     for (int i = 0; i < number; i++) {
       var mix = Mix(
         "id$i",
         "name$i",
-        "producer$i",
+        "Collection: $collection $i",
         "event$i",
         "url$i",
         DateTime.now(),
