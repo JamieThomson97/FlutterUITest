@@ -4,6 +4,7 @@ import 'package:vibration/bloc/app/app_bloc.dart';
 import 'package:vibration/presentation/pages/home_page.dart';
 import 'package:vibration/presentation/pages/now_playing_page.dart';
 import 'package:vibration/presentation/pages/sign_in_page.dart';
+import 'package:vibration/presentation/widgets/now_playing.dart';
 import 'package:vibration/repository/authentication_repository.dart';
 import 'package:vibration/test/mock_classes.dart';
 import 'package:vibration/theme.dart';
@@ -106,15 +107,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: _widgetOptions.elementAt(_selectedIndex),
             ),
           ),
-          Container(
-            height: 80,
-            color: Colors.red,
-            child: SizedBox.expand(
-              child: Center(
-                child: Text("Now playing"),
-              ),
-            ),
-          ),
+          NowPlaying(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+
+import 'extensions.dart';
 
 class Mix extends Equatable {
   final String id;
@@ -8,6 +11,7 @@ class Mix extends Equatable {
   final String imageUrl;
   final DateTime dateUploaded;
   final int length;
+  final Color color;
 
   Mix(
     this.id,
@@ -17,7 +21,7 @@ class Mix extends Equatable {
     this.imageUrl,
     this.dateUploaded,
     this.length,
-  );
+  ) : color = Extensions.GetRandomColor();
 
   @override
   List<Object> get props => [id];
