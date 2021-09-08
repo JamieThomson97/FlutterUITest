@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/now_playing/now_playing_bloc.dart';
+import 'package:vibration/cubit/screens/screens_cubit.dart';
 
 class NowPlaying extends StatelessWidget {
   const NowPlaying({
@@ -11,7 +12,7 @@ class NowPlaying extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NowPlayingBloc, NowPlayingState>(
-      builder: (context, state) {
+      builder: (blockContext, state) {
         return Container(
             height: 80,
             color: state is NowPlayingStateWithSong ? state.mix.color : Colors.grey,
@@ -24,19 +25,25 @@ class NowPlaying extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
                             child: Icon(Icons.play_arrow_outlined),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(state.mix.name),
-                              Text(state.mix.producer),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                          InkWell(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [Text("${state.mix.length} /"), Text(state.secondsIn.toString())],
+                              children: [
+                                Text(state.mix.name),
+                                Text(state.mix.producer),
+                              ],
                             ),
+                            onTap: () => _pushToNowPlaying(context, state),
+                          ),
+                          InkWell(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Text("${state.mix.length} /"), Text(state.secondsIn.toString())],
+                              ),
+                            ),
+                            onTap: () => _pushToNowPlaying(context, state),
                           )
                         ],
                       )
@@ -45,5 +52,15 @@ class NowPlaying extends StatelessWidget {
                       )));
       },
     );
+  }
+
+  void _pushToNowPlaying(BuildContext context, NowPlayingState state) {
+    if (state is NowPlayingInitial) return;
+    try {
+      var cubit = context.read<ScreensCubit>();
+      cubit.emit(Screen_NowPlaying());
+    } catch (e) {
+      int test;
+    }
   }
 }

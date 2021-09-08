@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/app/app_bloc.dart';
 import 'package:vibration/presentation/pages/home_page.dart';
 import 'package:vibration/presentation/pages/now_playing_page.dart';
-import 'package:vibration/presentation/pages/sign_in_page.dart';
 import 'package:vibration/presentation/widgets/now_playing.dart';
 import 'package:vibration/repository/authentication_repository.dart';
 import 'package:vibration/test/mock_classes.dart';
 import 'package:vibration/theme.dart';
+import 'package:vibration/cubit/screens/screens_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/now_playing/now_playing_bloc.dart';
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 routes: {
-                  '/nowPlaying': (context) => NowPlayingPage(),
+                  '/now_playing': (context) => NowPlayingPage(),
                 },
                 theme: theme,
                 home: HomeWidget(),
@@ -99,20 +99,30 @@ class _HomeWidgetState extends State<HomeWidget> {
     });
   }
 
+  Widget theDefault() => _widgetOptions.elementAt(_selectedIndex);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
         create: (context) => NowPlayingBloc(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: _widgetOptions.elementAt(_selectedIndex),
+        child: BlocProvider(
+          create: (context) => ScreensCubit(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: BlocListener<ScreensCubit, ScreensState>(
+                    child: _widgetOptions.elementAt(_selectedIndex),
+                    listener: (context, state) {
+                      _navigate(state.route);
+                    },
+                  ),
+                ),
               ),
-            ),
-            NowPlaying(),
-          ],
+              NowPlaying(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -143,5 +153,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  void _navigate(String route) {
+    Navigator.of(context).pushNamed('/$route');
   }
 }

@@ -74,6 +74,6 @@ class NowPlayingScrollable extends StatelessWidget {
     //   print("index: $index , itemCount as percentage: ${percentage * index} ,percentage: $percentage, isOver: $isOver");
     //   areCurrentlyOver = isOver;
     // }
-    return isOver ? Colors.red : Colors.white;
+    return isOver ? Colors.red : Colors.green;
   }
 }
