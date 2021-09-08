@@ -13,4 +13,7 @@ class NowPlayingStateWithSong extends NowPlayingState {
   NowPlayingStateWithSong(this.mix, this.secondsIn);
   final Mix mix;
   final int secondsIn;
+
+  @override
+  List<Object> get props => [mix.name];
 }

@@ -10,43 +10,40 @@ class NowPlaying extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NowPlayingBloc(),
-      child: BlocBuilder<NowPlayingBloc, NowPlayingState>(
-        builder: (context, state) {
-          return Container(
-              height: 80,
-              color: state is NowPlayingStateWithSong ? state.mix.color : Colors.grey,
-              child: SizedBox.expand(
-                  child: state is NowPlayingStateWithSong
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                              child: Icon(Icons.play_arrow_outlined),
-                            ),
-                            Column(
+    return BlocBuilder<NowPlayingBloc, NowPlayingState>(
+      builder: (context, state) {
+        return Container(
+            height: 80,
+            color: state is NowPlayingStateWithSong ? state.mix.color : Colors.grey,
+            child: SizedBox.expand(
+                child: state is NowPlayingStateWithSong
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                            child: Icon(Icons.play_arrow_outlined),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(state.mix.name),
+                              Text(state.mix.producer),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(state.mix.name),
-                                Text(state.mix.producer),
-                              ],
+                              children: [Text("${state.mix.length} /"), Text(state.secondsIn.toString())],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [Text("${state.mix.length} /"), Text(state.secondsIn.toString())],
-                              ),
-                            )
-                          ],
-                        )
-                      : Center(
-                          child: Text("Now playing"),
-                        )));
-        },
-      ),
+                          )
+                        ],
+                      )
+                    : Center(
+                        child: Text("Now playing"),
+                      )));
+      },
     );
   }
 }

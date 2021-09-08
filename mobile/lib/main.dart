@@ -10,6 +10,8 @@ import 'package:vibration/test/mock_classes.dart';
 import 'package:vibration/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'bloc/now_playing/now_playing_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -100,15 +102,18 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: _widgetOptions.elementAt(_selectedIndex),
+      body: BlocProvider(
+        create: (context) => NowPlayingBloc(),
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: _widgetOptions.elementAt(_selectedIndex),
+              ),
             ),
-          ),
-          NowPlaying(),
-        ],
+            NowPlaying(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.lightBlue,

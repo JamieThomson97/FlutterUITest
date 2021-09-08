@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibration/bloc/now_playing/now_playing_bloc.dart';
 import 'package:vibration/model/mix.dart';
 
 class MixTile extends StatelessWidget {
@@ -33,7 +35,9 @@ class MixTile extends StatelessWidget {
               ),
             ),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                context.read<NowPlayingBloc>().add(NowPlayingEventSongSelected(mix, 0));
+              },
             ),
             height: 145,
             width: 145,
