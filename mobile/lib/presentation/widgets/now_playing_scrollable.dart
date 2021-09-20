@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vibration/cubit/now_playing_scroll/now_playing_cubit.dart';
+import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 import 'dart:math' as math;
 
 class NowPlayingScrollable extends StatelessWidget {
   const NowPlayingScrollable({
     Key? key,
     required this.scrollController,
+    required this.songLength,
   }) : super(key: key);
 
   final ScrollController scrollController;
+  final int songLength;
+
   @override
   Widget build(BuildContext context) {
-    int itemCount = 585;
+    int itemCount = (songLength / 4).floor();
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       controller: scrollController,
@@ -36,7 +39,7 @@ class NowPlayingScrollable extends StatelessWidget {
             ),
           );
         else
-          return BlocBuilder<NowPlayingCubit, NowPlayingState>(
+          return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
             buildWhen: (prevState, currentState) {
               return _isOver(itemCount, index, prevState.songPercentage) !=
                   _isOver(itemCount, index, currentState.songPercentage);

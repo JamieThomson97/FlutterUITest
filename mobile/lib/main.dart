@@ -47,15 +47,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-          create: (_) => AppBloc(
+      child: MultiBlocProvider(
+          providers: [
+            BlocProvider<AppBloc>(
+              create: (_) => AppBloc(
                 authenticationRepository: _authenticationRepository,
               ),
+            ),
+            BlocProvider<NowPlayingBloc>(
+              create: (_) => NowPlayingBloc(),
+            )
+          ],
           child: BlocBuilder<AppBloc, AppState>(
             builder: (context, state) {
               return MaterialApp(
                 routes: {
-                  '/now_playing': (context) => NowPlayingPage(),
+                  '/now_playing': (context) => BlocProvider.value(
+                        value: BlocProvider.of<NowPlayingBloc>(context),
+                        child: NowPlayingPage(),
+                      ),
                 },
                 theme: theme,
                 home: HomeWidget(),
@@ -105,24 +115,21 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => NowPlayingBloc(),
-        child: BlocProvider(
-          create: (context) => ScreensCubit(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: BlocListener<ScreensCubit, ScreensState>(
-                    child: _widgetOptions.elementAt(_selectedIndex),
-                    listener: (context, state) {
-                      _navigate(state.route);
-                    },
-                  ),
+        create: (context) => ScreensCubit(),
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: BlocListener<ScreensCubit, ScreensState>(
+                  child: _widgetOptions.elementAt(_selectedIndex),
+                  listener: (context, state) {
+                    _navigate(state.route);
+                  },
                 ),
               ),
-              NowPlaying(),
-            ],
-          ),
+            ),
+            NowPlaying(),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

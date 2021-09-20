@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/app/app_bloc.dart';
-import 'package:vibration/cubit/now_playing_scroll/now_playing_cubit.dart';
+import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 import 'package:vibration/model/user.dart';
 import 'package:vibration/presentation/widgets/carousel.dart';
 import 'package:vibration/presentation/widgets/discover_carousel.dart';

@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/pages/now_playing_page.dart';
 
-part 'now_playing_state.dart';
+part 'now_playing_scroll_state.dart';
 
-class NowPlayingCubit extends Cubit<NowPlayingState> {
-  NowPlayingCubit(this._scrollController, Mix mix) : super(NowPlayingState(songPercentage: 0, mix: mix)) {
+class NowPlayingScrollCubit extends Cubit<NowPlayingScrollState> {
+  NowPlayingScrollCubit(this._scrollController, Mix mix) : super(NowPlayingScrollState(songPercentage: 0, mix: mix)) {
     _scrollController.addListener(_whenScrolled);
   }
 
