@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:vibration/bloc/now_playing/now_playing_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 import 'package:vibration/model/mix.dart';
@@ -80,7 +81,7 @@ class NowPlayingPage extends StatelessWidget {
                                 color: Colors.white,
                                 child: MarqueeWidget(
                                   text: Text(
-                                    state.mix.dateUploaded.toString(),
+                                    DateFormat('yyyy-MM-dd').format(state.mix.dateUploaded),
                                     style: Theme.of(context).textTheme.headline5,
                                     textAlign: TextAlign.left,
                                   ),
@@ -99,7 +100,7 @@ class NowPlayingPage extends StatelessWidget {
                           return Container(
                             color: Colors.white,
                             child: Text(
-                              "${updatePercentage(state.songPercentage, state.mix.length)} | ${state.songLengthString}",
+                              "${state.songPositionString} | ${state.songLengthString}",
                               style: Theme.of(context).textTheme.headline5,
                             ),
                           );
@@ -122,16 +123,5 @@ class NowPlayingPage extends StatelessWidget {
             ));
       },
     );
-  }
-
-  static String updatePercentage(double percentage, int songLength) {
-    percentage = percentage < 0 ? 0 : percentage;
-    var seconds = (songLength * percentage).round();
-    if (seconds > songLength) seconds = songLength;
-    int minutes = (seconds / 60).truncate();
-    var remainingSeconds = seconds - (minutes * 60);
-    String minsString = minutes < 10 ? "0$minutes" : minutes.toString();
-    String minsSecs = remainingSeconds < 10 ? "0$remainingSeconds" : remainingSeconds.toString();
-    return "$minsString:$minsSecs";
   }
 }

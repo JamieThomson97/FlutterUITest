@@ -18,7 +18,7 @@ class NowPlayingScrollable extends StatelessWidget {
   Widget build(BuildContext context) {
     int itemCount = (songLength / 4).floor();
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: PageScrollPhysics(),
       controller: scrollController,
       scrollDirection: Axis.horizontal,
       itemCount: itemCount,
@@ -33,7 +33,7 @@ class NowPlayingScrollable extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               color: Colors.transparent,
-              height: 30,
+              height: 1,
               width: 0.5,
               // child: Text('Item: '),
             ),
@@ -56,7 +56,7 @@ class NowPlayingScrollable extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   color: _getColour(itemCount, index, state.songPercentage),
                   height: height,
-                  width: 1,
+                  width: 1.2,
                 ),
               );
             },

@@ -3,6 +3,7 @@ part of 'now_playing_scroll_cubit.dart';
 class NowPlayingScrollState {
   NowPlayingScrollState({required this.songPercentage, required this.mix}) {
     songLengthString = updatePercentage(100, mix.length);
+    songPositionString = updatePercentage(songPercentage, mix.length);
   }
 
   @override
@@ -12,6 +13,7 @@ class NowPlayingScrollState {
   late Mix mix;
 
   late String songLengthString;
+  late String songPositionString;
 
   NowPlayingScrollState copyWith({double? songPercentage}) {
     return NowPlayingScrollState(
@@ -20,14 +22,25 @@ class NowPlayingScrollState {
     );
   }
 
-  static String updatePercentage(double percentage, int songLength) {
-    percentage = percentage < 0 ? 0 : percentage;
-    var seconds = (songLength * percentage).round();
-    if (seconds > songLength) seconds = songLength;
-    int minutes = (seconds / 60).truncate();
-    var remainingSeconds = seconds - (minutes * 60);
-    String minsString = minutes < 10 ? "0$minutes" : minutes.toString();
-    String minsSecs = remainingSeconds < 10 ? "0$remainingSeconds" : remainingSeconds.toString();
-    return "$minsString:$minsSecs";
+  static String updatePercentage(double percentage, int value) {
+    int h, m, s;
+
+    value = (value * percentage).truncate();
+
+    h = value ~/ 3600;
+
+    m = ((value - h * 3600)) ~/ 60;
+
+    s = value - (h * 3600) - (m * 60);
+
+    String hourLeft = h.toString().length < 2 ? "0" + h.toString() : h.toString();
+
+    String minuteLeft = m.toString().length < 2 ? "0" + m.toString() : m.toString();
+
+    String secondsLeft = s.toString().length < 2 ? "0" + s.toString() : s.toString();
+
+    String result = "$hourLeft:$minuteLeft:$secondsLeft";
+
+    return result;
   }
 }
