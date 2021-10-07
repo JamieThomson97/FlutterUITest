@@ -10,7 +10,7 @@ import 'package:vibration/theme.dart';
 import 'package:vibration/cubit/screens/screens_cubit.dart';
 import 'package:flutter/material.dart';
 
-import 'bloc/now_playing/now_playing_bloc.dart';
+import 'bloc/audio_controller/audio_controller_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
                 authenticationRepository: _authenticationRepository,
               ),
             ),
-            BlocProvider<NowPlayingBloc>(
-              create: (_) => NowPlayingBloc(),
+            BlocProvider<AudioControllerBloc>(
+              create: (_) => AudioControllerBloc(),
             )
           ],
           child: BlocBuilder<AppBloc, AppState>(
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 routes: {
                   '/now_playing': (context) => BlocProvider.value(
-                        value: BlocProvider.of<NowPlayingBloc>(context),
+                        value: BlocProvider.of<AudioControllerBloc>(context),
                         child: NowPlayingPage(),
                       ),
                 },

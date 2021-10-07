@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:vibration/bloc/now_playing/now_playing_bloc.dart';
+import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
-import 'package:vibration/model/mix.dart';
-import 'package:vibration/presentation/widgets/SongLengthScrollController.dart';
 import 'package:vibration/presentation/widgets/marquee.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
@@ -16,10 +14,10 @@ class NowPlayingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NowPlayingBloc, NowPlayingState>(
-      bloc: BlocProvider.of<NowPlayingBloc>(context),
+    return BlocBuilder<AudioControllerBloc, AudioControllerState>(
+      bloc: BlocProvider.of<AudioControllerBloc>(context),
       builder: (context, state) {
-        if (!(state is NowPlayingStateWithSong)) {
+        if (!(state is AudioControllerHasSong)) {
           throw Exception("shouldn't possible to get here");
         }
         return BlocProvider(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vibration/bloc/now_playing/now_playing_bloc.dart';
+import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/screens/screens_cubit.dart';
 
 class NowPlaying extends StatelessWidget {
@@ -11,13 +11,13 @@ class NowPlaying extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NowPlayingBloc, NowPlayingState>(
+    return BlocBuilder<AudioControllerBloc, AudioControllerState>(
       builder: (blockContext, state) {
         return Container(
             height: 80,
-            color: state is NowPlayingStateWithSong ? state.mix.color : Colors.grey,
+            color: state is AudioControllerHasSong ? state.mix.color : Colors.grey,
             child: SizedBox.expand(
-                child: state is NowPlayingStateWithSong
+                child: state is AudioControllerHasSong
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -54,8 +54,8 @@ class NowPlaying extends StatelessWidget {
     );
   }
 
-  void _pushToNowPlaying(BuildContext context, NowPlayingState state) {
-    if (state is NowPlayingInitial) return;
+  void _pushToNowPlaying(BuildContext context, AudioControllerState state) {
+    if (state is AudioControllerInitial) return;
     try {
       var cubit = context.read<ScreensCubit>();
       cubit.emit(Screen_NowPlaying());
