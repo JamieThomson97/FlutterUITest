@@ -12,6 +12,7 @@ class Mix extends Equatable {
   final DateTime dateUploaded;
   final int length;
   final Color color;
+  final String path;
 
   Mix(
     this.id,
@@ -21,6 +22,7 @@ class Mix extends Equatable {
     this.imageUrl,
     this.dateUploaded,
     this.length,
+    this.path,
   ) : color = Extensions.GetRandomColor();
 
   @override

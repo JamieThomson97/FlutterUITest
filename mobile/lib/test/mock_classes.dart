@@ -67,6 +67,7 @@ class MockMixes implements IMixesRepository {
         "url$i",
         DateTime.now(),
         4800 + i,
+        "/Users/jamiethomson/Git/Vibration-v2/mobile/resources/audio/TestAudioFile.mp3",
       );
       mixes.add(mix);
     }
