@@ -11,7 +11,7 @@ part 'audio_controller_state.dart';
 class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerState> {
   AudioControllerBloc() : super(AudioControllerInitial());
 
-  late MusicPlayer _musicPlayer = MusicPlayer();
+  late MusicPlayer _musicPlayer = MusicPlayer(new MockAudioPlayer());
 
   @override
   Stream<AudioControllerState> mapEventToState(

@@ -50,7 +50,6 @@ class NowPlayingScrollable extends StatelessWidget {
               double height = index % 50;
               if (dunno == 1) height = 50 - height;
               height = height + 30;
-              print("Height: $height");
               return Align(
                 child: Container(
                   alignment: Alignment.centerLeft,

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,9 +44,7 @@ class SignInPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: TextButton(
-                          onPressed: () => {
-                            FirebaseFirestore.instance.collection('test').add({'name': 'CuntyLloyd'})
-                          },
+                          onPressed: () => {},
                           child: Text(
                             "Forgot your password?",
                           ),
@@ -56,9 +53,7 @@ class SignInPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: TextButton(
-                          onPressed: () => {
-                            FirebaseFirestore.instance.collection('test').add({'timestamp': 'JamieThomson'})
-                          },
+                          onPressed: () => {},
                           child: Text(
                             "Sign up",
                             textAlign: TextAlign.left,
