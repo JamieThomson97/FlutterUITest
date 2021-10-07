@@ -1,11 +1,15 @@
 import 'package:just_audio/just_audio.dart';
 
 class MusicPlayer {
-  final player = AudioPlayer();
+  final _player = AudioPlayer();
 
   MusicPlayer() {}
 
   void initialiseMix(String path) async {
-    var duration = await player.setFilePath(path);
+    var duration = await _player.setFilePath(path);
+  }
+
+  void playMix() {
+    _player.play();
   }
 }

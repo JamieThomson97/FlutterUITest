@@ -22,6 +22,7 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
 
   Stream<AudioControllerState> _mixStarted(MixStartedEvent event) async* {
     _musicPlayer.initialiseMix(event.mix.path);
+    _musicPlayer.playMix();
     yield AudioControllerHasSong(event.mix, 0);
   }
 }
