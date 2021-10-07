@@ -38,6 +38,7 @@ dependencies:
   pedantic: ^1.11.1
   formz: ^0.4.0
   bloc_test: 8.2.0
+  just_audio: ^0.9.12
 
 dev_dependencies:
   flutter_test:
