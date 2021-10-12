@@ -4,13 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/model/music_player.dart';
-import 'package:vibration/test/mock_classes.dart';
 
 part 'audio_controller_event.dart';
 part 'audio_controller_state.dart';
 
 class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerState> {
-  AudioControllerBloc() : super(AudioControllerInitial());
+  AudioControllerBloc() : super(AudioControllerState.audioControllerInitial());
 
   late MusicPlayer _musicPlayer = MusicPlayer(new JustAudioWrapper());
 
@@ -19,18 +18,28 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
     AudioControllerEvent event,
   ) async* {
     if (event is MixStartedEvent) yield* _mixStarted(event);
+    if (event is MixPlayPausedEvent) yield* _mixPlayPaused(event);
   }
 
   Stream<AudioControllerState> _mixStarted(MixStartedEvent event) async* {
-    yield AudioControllerHasSong(event.mix, 0, true);
+    yield AudioControllerState(
+      mix: event.mix,
+      secondsIn: 0,
+      isPlaying: true,
+      status: AudioControllerStatus.HasSong,
+    );
     await _musicPlayer.initialiseMix(event.mix.path);
     _musicPlayer.playMix();
   }
 
   Stream<AudioControllerState> _mixPlayPaused(MixPlayPausedEvent event) async* {
-    if (state is AudioControllerHasSong) {
-      yield AudioControllerHasSong(MockMixes.getMockMixes(1, "ds").first, 0, true);
+    yield state.copyWith(
+      AudioControllerStatus.HasSong,
+      isPlaying: !event.isPlaying,
+    );
+    if (event.isPlaying)
       _musicPlayer.pauseMix();
-    }
+    else
+      _musicPlayer.playMix();
   }
 }
