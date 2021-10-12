@@ -12,6 +12,7 @@ class AudioControllerInitial extends AudioControllerState {}
 class AudioControllerHasSong extends AudioControllerState {
   final Mix mix;
   final int secondsIn;
+  final bool isPlaying;
 
-  AudioControllerHasSong(this.mix, this.secondsIn);
+  AudioControllerHasSong(this.mix, this.secondsIn, this.isPlaying);
 }

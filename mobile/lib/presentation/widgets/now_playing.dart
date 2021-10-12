@@ -22,9 +22,19 @@ class NowPlaying extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                            child: Icon(Icons.play_arrow_outlined),
-                          ),
+                              padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                              child: IconButton(
+                                onPressed: () {
+                                  _onPlayPausePressed(state.isPlaying, context);
+                                },
+                                icon: state.isPlaying
+                                    ? Icon(
+                                        Icons.play_arrow_outlined,
+                                      )
+                                    : Icon(
+                                        Icons.pause_circle_outline,
+                                      ),
+                              )),
                           InkWell(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -62,5 +72,10 @@ class NowPlaying extends StatelessWidget {
     } catch (e) {
       int test;
     }
+  }
+
+  void _onPlayPausePressed(bool isPlaying, BuildContext context) {
+    var bloc = context.read<AudioControllerBloc>();
+    bloc.add(MixPlayPausedEvent(isPlaying));
   }
 }
