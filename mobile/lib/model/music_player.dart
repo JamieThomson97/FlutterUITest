@@ -1,22 +1,47 @@
-// import 'package:just_audio/just_audio.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MusicPlayer {
   final IAudioPlayer _player;
 
   MusicPlayer(this._player);
 
-  void initialiseMix(String path) async {
+  Future<void> initialiseMix(String path) async {
     var duration = await _player.setFilePath(path);
   }
 
   void playMix() {
     _player.play();
   }
+
+  void pauseMix() {
+    _player.pause();
+  }
 }
 
 abstract class IAudioPlayer {
-  int setFilePath(String path);
+  Future<Duration?> setFilePath(String path);
   void play();
+  void pause();
+}
+
+class JustAudioWrapper implements IAudioPlayer {
+  AudioPlayer player = AudioPlayer();
+
+  @override
+  void play() {
+    player.play();
+  }
+
+  @override
+  Future<Duration?> setFilePath(String path) async {
+    var result = await player.setAsset(path);
+    return result;
+  }
+
+  @override
+  void pause() {
+    player.pause();
+  }
 }
 
 class MockAudioPlayer implements IAudioPlayer {
@@ -26,7 +51,13 @@ class MockAudioPlayer implements IAudioPlayer {
   }
 
   @override
-  int setFilePath(String path) {
-    return -1;
+  Future<Duration?> setFilePath(String path) {
+    // TODO: implement setFilePath
+    throw UnimplementedError();
+  }
+
+  @override
+  void pause() {
+    // TODO: implement Pause
   }
 }

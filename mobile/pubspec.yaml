@@ -59,6 +59,8 @@ flutter:
     - resources/images/
     - resources/Now_Playing_Screen/
 
+    - resources/audio/TestAudioFile.mp3
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

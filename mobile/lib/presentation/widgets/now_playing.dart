@@ -13,24 +13,35 @@ class NowPlaying extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AudioControllerBloc, AudioControllerState>(
       builder: (blockContext, state) {
+        print("IsPlaying ${state.isPlaying}");
         return Container(
             height: 80,
-            color: state is AudioControllerHasSong ? state.mix.color : Colors.grey,
+            color: state.status == AudioControllerStatus.HasSong ? state.mix!.color : Colors.grey,
             child: SizedBox.expand(
-                child: state is AudioControllerHasSong
+                child: state.status == AudioControllerStatus.HasSong
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                            child: Icon(Icons.play_arrow_outlined),
-                          ),
+                              padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                              child: IconButton(
+                                onPressed: () {
+                                  _onPlayPausePressed(state.isPlaying, context);
+                                },
+                                icon: state.isPlaying
+                                    ? Icon(
+                                        Icons.pause_circle_outline,
+                                      )
+                                    : Icon(
+                                        Icons.play_arrow_outlined,
+                                      ),
+                              )),
                           InkWell(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(state.mix.name),
-                                Text(state.mix.producer),
+                                Text(state.mix!.name),
+                                Text(state.mix!.producer),
                               ],
                             ),
                             onTap: () => _pushToNowPlaying(context, state),
@@ -40,7 +51,7 @@ class NowPlaying extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [Text("${state.mix.length} /"), Text(state.secondsIn.toString())],
+                                children: [Text("${state.mix!.length} /"), Text(state.secondsIn.toString())],
                               ),
                             ),
                             onTap: () => _pushToNowPlaying(context, state),
@@ -55,12 +66,17 @@ class NowPlaying extends StatelessWidget {
   }
 
   void _pushToNowPlaying(BuildContext context, AudioControllerState state) {
-    if (state is AudioControllerInitial) return;
+    if (state.status == AudioControllerStatus.NoSong) return;
     try {
       var cubit = context.read<ScreensCubit>();
       cubit.emit(Screen_NowPlaying());
     } catch (e) {
       int test;
     }
+  }
+
+  void _onPlayPausePressed(bool isPlaying, BuildContext context) {
+    var bloc = context.read<AudioControllerBloc>();
+    bloc.add(MixPlayPausedEvent(isPlaying));
   }
 }

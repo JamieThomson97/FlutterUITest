@@ -17,11 +17,14 @@ class NowPlayingPage extends StatelessWidget {
     return BlocBuilder<AudioControllerBloc, AudioControllerState>(
       bloc: BlocProvider.of<AudioControllerBloc>(context),
       builder: (context, state) {
-        if (!(state is AudioControllerHasSong)) {
+        if ((state.status == AudioControllerStatus.NoSong)) {
           throw Exception("shouldn't possible to get here");
         }
         return BlocProvider(
-            create: (context) => NowPlayingScrollCubit(_scrollController, state.mix),
+            create: (context) => NowPlayingScrollCubit(
+                  _scrollController,
+                  state.mix!,
+                ),
             child: SafeArea(
               child: Container(
                 padding: EdgeInsets.all(6),
@@ -54,7 +57,7 @@ class NowPlayingPage extends StatelessWidget {
                                 child: MarqueeWidget(
                                   direction: Axis.horizontal,
                                   text: Text(
-                                    state.mix.producer,
+                                    state.mix!.producer,
                                     style: Theme.of(context).textTheme.headline5,
                                   ),
                                 ),
@@ -66,7 +69,7 @@ class NowPlayingPage extends StatelessWidget {
                                 color: Colors.white,
                                 child: MarqueeWidget(
                                   text: Text(
-                                    state.mix.event,
+                                    state.mix!.event,
                                     style: Theme.of(context).textTheme.headline6,
                                     textAlign: TextAlign.left,
                                   ),
@@ -79,7 +82,7 @@ class NowPlayingPage extends StatelessWidget {
                                 color: Colors.white,
                                 child: MarqueeWidget(
                                   text: Text(
-                                    DateFormat('yyyy-MM-dd').format(state.mix.dateUploaded),
+                                    DateFormat('yyyy-MM-dd').format(state.mix!.dateUploaded),
                                     style: Theme.of(context).textTheme.headline5,
                                     textAlign: TextAlign.left,
                                   ),
@@ -111,7 +114,7 @@ class NowPlayingPage extends StatelessWidget {
                         height: 100,
                         child: NowPlayingScrollable(
                           scrollController: _scrollController,
-                          songLength: state.mix.length,
+                          songLength: state.mix!.length,
                         ),
                       ),
                     ],
