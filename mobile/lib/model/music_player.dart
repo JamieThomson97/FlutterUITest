@@ -27,6 +27,16 @@ abstract class IAudioPlayer {
 class JustAudioWrapper implements IAudioPlayer {
   AudioPlayer player = AudioPlayer();
 
+  JustAudioWrapper() {
+    player.positionStream.listen((event) {
+      onChange(event);
+    });
+  }
+
+  void onChange(Duration timeStamp) {
+    int idk;
+  }
+
   @override
   void play() {
     player.play();
