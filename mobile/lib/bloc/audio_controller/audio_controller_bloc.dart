@@ -9,7 +9,11 @@ part 'audio_controller_event.dart';
 part 'audio_controller_state.dart';
 
 class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerState> {
-  AudioControllerBloc() : super(AudioControllerState.audioControllerInitial());
+  AudioControllerBloc() : super(AudioControllerState.audioControllerInitial()) {
+    _musicPlayer.playerTickerStream.listen((event) {
+      _durationChanged(event);
+    });
+  }
 
   late MusicPlayer _musicPlayer = MusicPlayer(new JustAudioWrapper());
 
@@ -19,6 +23,7 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
   ) async* {
     if (event is MixStartedEvent) yield* _mixStarted(event);
     if (event is MixPlayPausedEvent) yield* _mixPlayPaused(event);
+    if (event is MixTimestampChangedEvent) yield* _mixTimestampChanged(event);
   }
 
   Stream<AudioControllerState> _mixStarted(MixStartedEvent event) async* {
@@ -41,5 +46,16 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
       _musicPlayer.pauseMix();
     else
       _musicPlayer.playMix();
+  }
+
+  Stream<AudioControllerState> _mixTimestampChanged(MixTimestampChangedEvent event) async* {
+    yield state.copyWith(
+      AudioControllerStatus.HasSong,
+      secondsIn: event.secondsIn,
+    );
+  }
+
+  void _durationChanged(Duration timestamp) {
+    this.add(MixTimestampChangedEvent(timestamp.inSeconds));
   }
 }

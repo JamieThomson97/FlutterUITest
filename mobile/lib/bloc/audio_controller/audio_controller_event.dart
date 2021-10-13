@@ -18,4 +18,10 @@ class MixPlayPausedEvent extends AudioControllerEvent {
   MixPlayPausedEvent(this.isPlaying);
 }
 
+class MixTimestampChangedEvent extends AudioControllerEvent {
+  final int secondsIn;
+
+  MixTimestampChangedEvent(this.secondsIn);
+}
+
 class MixSeekedEvent extends AudioControllerEvent {}

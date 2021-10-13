@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:just_audio/just_audio.dart';
 
 class MusicPlayer {
   final IAudioPlayer _player;
+  Stream<Duration> get playerTickerStream => _player.playerTickerStream;
 
   MusicPlayer(this._player);
 
@@ -22,19 +25,25 @@ abstract class IAudioPlayer {
   Future<Duration?> setFilePath(String path);
   void play();
   void pause();
+
+  Stream<Duration> get playerTickerStream;
 }
 
 class JustAudioWrapper implements IAudioPlayer {
   AudioPlayer player = AudioPlayer();
 
+// todo: Close sink
+  final StreamController<Duration> _playerTicker = StreamController<Duration>();
+  Stream<Duration> get playerTickerStream => _playerTicker.stream;
+
   JustAudioWrapper() {
     player.positionStream.listen((event) {
-      onChange(event);
+      if (player.audioSource != null) onChange(event);
     });
   }
 
   void onChange(Duration timeStamp) {
-    int idk;
+    _playerTicker.sink.add(timeStamp);
   }
 
   @override
@@ -70,4 +79,8 @@ class MockAudioPlayer implements IAudioPlayer {
   void pause() {
     // TODO: implement Pause
   }
+
+  @override
+  // TODO: implement playerTickerStream
+  Stream<Duration> get playerTickerStream => throw UnimplementedError();
 }
