@@ -36,9 +36,16 @@ class JustAudioWrapper implements IAudioPlayer {
   final StreamController<Duration> _playerTicker = StreamController<Duration>();
   Stream<Duration> get playerTickerStream => _playerTicker.stream;
 
+  late int secondsIn = -1;
+
   JustAudioWrapper() {
     player.positionStream.listen((event) {
-      if (player.audioSource != null) onChange(event);
+      if (player.audioSource != null) {
+        if (secondsIn != event.inSeconds) {
+          secondsIn = event.inSeconds;
+          onChange(event);
+        }
+      }
     });
   }
 
