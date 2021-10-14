@@ -28,18 +28,20 @@ class NowPlayingPage extends StatelessWidget {
                   create: (context) => NowPlayingScrollCubit(
                     _scrollController,
                     state.mix!,
+                    context.read<AudioControllerBloc>(),
                   ),
                   child: BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
                     builder: (context, state) {
                       return Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
-                            alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
+                              alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+                            ),
                           ),
+                          padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                         ),
-                        padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                       );
                     },
                   ),
@@ -122,6 +124,7 @@ class NowPlayingPage extends StatelessWidget {
                       create: (context) => NowPlayingScrollCubit(
                         _scrollController,
                         state.mix!,
+                        context.read<AudioControllerBloc>(),
                       ),
                       child: BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
                         builder: (context, state) {
@@ -150,6 +153,7 @@ class NowPlayingPage extends StatelessWidget {
                       create: (context) => NowPlayingScrollCubit(
                         _scrollController,
                         state.mix!,
+                        context.read<AudioControllerBloc>(),
                       ),
                       child: Container(
                         height: 100,

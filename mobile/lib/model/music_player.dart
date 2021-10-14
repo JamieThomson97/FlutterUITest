@@ -19,12 +19,17 @@ class MusicPlayer {
   void pauseMix() {
     _player.pause();
   }
+
+  void seekMix(Duration timestamp) {
+    _player.seek(timestamp);
+  }
 }
 
 abstract class IAudioPlayer {
   Future<Duration?> setFilePath(String path);
   void play();
   void pause();
+  void seek(Duration position);
 
   Stream<Duration> get playerTickerStream;
 }
@@ -68,6 +73,11 @@ class JustAudioWrapper implements IAudioPlayer {
   void pause() {
     player.pause();
   }
+
+  @override
+  void seek(Duration position) {
+    player.seek(position);
+  }
 }
 
 class MockAudioPlayer implements IAudioPlayer {
@@ -90,4 +100,9 @@ class MockAudioPlayer implements IAudioPlayer {
   @override
   // TODO: implement playerTickerStream
   Stream<Duration> get playerTickerStream => throw UnimplementedError();
+
+  @override
+  void seek(Duration position) {
+    // TODO: implement seek
+  }
 }

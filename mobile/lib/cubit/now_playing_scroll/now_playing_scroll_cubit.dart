@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/model/mix.dart';
 
 part 'now_playing_scroll_state.dart';
 
 class NowPlayingScrollCubit extends Cubit<NowPlayingScrollState> {
-  NowPlayingScrollCubit(this._scrollController, Mix mix)
+  NowPlayingScrollCubit(this._scrollController, Mix mix, this.audioControllerBloc)
       : super(NowPlayingScrollState(
           songPercentage: 0,
           mix: mix,
@@ -13,6 +14,7 @@ class NowPlayingScrollCubit extends Cubit<NowPlayingScrollState> {
     _scrollController.addListener(_whenScrolled);
   }
 
+  final AudioControllerBloc audioControllerBloc;
   final ScrollController _scrollController;
 
   void updatePercentage(double percentage, int songLength) {

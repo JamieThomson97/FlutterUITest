@@ -24,4 +24,10 @@ class MixTimestampChangedEvent extends AudioControllerEvent {
   MixTimestampChangedEvent(this.secondsIn);
 }
 
-class MixSeekedEvent extends AudioControllerEvent {}
+class MixSeekStartedEvent extends AudioControllerEvent {}
+
+class MixSeekEndedEvent extends AudioControllerEvent {
+  final double songPercentage;
+
+  MixSeekEndedEvent(this.songPercentage);
+}

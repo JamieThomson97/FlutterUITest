@@ -13,7 +13,6 @@ class NowPlaying extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AudioControllerBloc, AudioControllerState>(
       builder: (blockContext, state) {
-        print("IsPlaying ${state.isPlaying}");
         return Container(
             height: 80,
             color: state.status == AudioControllerStatus.HasSong ? state.mix!.color : Colors.grey,

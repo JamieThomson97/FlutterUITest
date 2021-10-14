@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
@@ -20,57 +21,69 @@ class NowPlayingScrollable extends StatelessWidget {
     return BlocListener<AudioControllerBloc, AudioControllerState>(
       listener: (context, state) {
         if (state.status == AudioControllerStatus.HasSong) {
-          scrollController.animateTo(
+          _ignoreScrolling = true;
+          scrollController.jumpTo(
             _getScrollOffset(state.secondsIn),
-            duration: Duration(milliseconds: 500),
-            curve: Curves.ease,
           );
+          _ignoreScrolling = false;
         }
       },
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        itemCount: itemCount,
-        itemBuilder: ((BuildContext context, int index) {
-          if (index == 1 || index == itemCount - 1) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-            );
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (scrollNotification) {
+          if (scrollNotification is ScrollStartNotification) {
+            _onStartScroll(scrollNotification.metrics, context.read<AudioControllerBloc>());
+          } else if (scrollNotification is ScrollUpdateNotification) {
+            _onUpdateScroll(scrollNotification.metrics, context.read<AudioControllerBloc>());
+          } else if (scrollNotification is ScrollEndNotification) {
+            _onEndScroll(scrollNotification.metrics, scrollController, context.read<AudioControllerBloc>());
           }
-          if (index & 2 == 0)
-            return Align(
-              child: Container(
-                alignment: Alignment.center,
-                color: Colors.transparent,
-                height: 1,
-                width: 0.5,
-                // child: Text('Item: '),
-              ),
-            );
-          else
-            return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
-              buildWhen: (prevState, currentState) {
-                return _isOver(itemCount, index, prevState.songPercentage) !=
-                    _isOver(itemCount, index, currentState.songPercentage);
-              },
-              builder: (context, state) {
-                int trig = (index / 50).floor();
-                int dunno = trig % 2;
-                double height = index % 50;
-                if (dunno == 1) height = 50 - height;
-                height = height + 30;
-                return Align(
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    color: _getColour(itemCount, index, state.songPercentage),
-                    height: height,
-                    width: 1.2,
-                  ),
-                );
-              },
-            );
-        }),
+          return false;
+        },
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          controller: scrollController,
+          scrollDirection: Axis.horizontal,
+          itemCount: itemCount,
+          itemBuilder: ((BuildContext context, int index) {
+            if (index == 1 || index == itemCount - 1) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+              );
+            }
+            if (index & 2 == 0)
+              return Align(
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.transparent,
+                  height: 1,
+                  width: 0.5,
+                  // child: Text('Item: '),
+                ),
+              );
+            else
+              return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+                buildWhen: (prevState, currentState) {
+                  return _isOver(itemCount, index, prevState.songPercentage) !=
+                      _isOver(itemCount, index, currentState.songPercentage);
+                },
+                builder: (context, state) {
+                  int trig = (index / 50).floor();
+                  int dunno = trig % 2;
+                  double height = index % 50;
+                  if (dunno == 1) height = 50 - height;
+                  height = height + 30;
+                  return Align(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      color: _getColour(itemCount, index, state.songPercentage),
+                      height: height,
+                      width: 1.2,
+                    ),
+                  );
+                },
+              );
+          }),
+        ),
       ),
     );
   }
@@ -91,10 +104,30 @@ class NowPlayingScrollable extends StatelessWidget {
     return isOver ? Colors.red : Colors.green;
   }
 
+  static bool _ignoreScrolling = false;
+
   double _getScrollOffset(int time) {
     var percentage = time / songLength;
     var something = scrollController.position.maxScrollExtent * percentage;
     print("Autoscrolling to $something");
     return something;
+  }
+
+  _onStartScroll(ScrollMetrics metrics, AudioControllerBloc bloc) {
+    if (_ignoreScrolling) return;
+    print("Scroll Start");
+    bloc.add(MixSeekStartedEvent());
+  }
+
+  _onUpdateScroll(ScrollMetrics metrics, AudioControllerBloc bloc) {
+    if (_ignoreScrolling) return;
+    print("Scroll Update");
+  }
+
+  _onEndScroll(ScrollMetrics metrics, ScrollController controller, AudioControllerBloc bloc) {
+    if (_ignoreScrolling) return;
+    var position = controller.offset / controller.position.maxScrollExtent;
+    bloc.add(MixSeekEndedEvent(position));
+    print("Scroll End");
   }
 }
