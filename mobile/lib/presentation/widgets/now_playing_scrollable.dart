@@ -28,7 +28,7 @@ class NowPlayingScrollable extends StatelessWidget {
         }
       },
       child: ListView.builder(
-        physics: PageScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         controller: scrollController,
         scrollDirection: Axis.horizontal,
         itemCount: itemCount,
