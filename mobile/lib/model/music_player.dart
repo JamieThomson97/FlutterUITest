@@ -5,6 +5,7 @@ import 'package:just_audio/just_audio.dart';
 class MusicPlayer {
   final IAudioPlayer _player;
   Stream<Duration> get playerTickerStream => _player.playerTickerStream;
+  bool get isPlaying => _player.isPlaying;
 
   MusicPlayer(this._player);
 
@@ -12,12 +13,11 @@ class MusicPlayer {
     var duration = await _player.setFilePath(path);
   }
 
-  void playMix() {
-    _player.play();
-  }
-
-  void pauseMix() {
-    _player.pause();
+  void playPauseMix() {
+    if (_player.isPlaying)
+      _player.pause();
+    else
+      _player.play();
   }
 
   void seekMix(Duration timestamp) {
@@ -30,6 +30,8 @@ abstract class IAudioPlayer {
   void play();
   void pause();
   void seek(Duration position);
+
+  bool get isPlaying;
 
   Stream<Duration> get playerTickerStream;
 }
@@ -78,6 +80,9 @@ class JustAudioWrapper implements IAudioPlayer {
   void seek(Duration position) {
     player.seek(position);
   }
+
+  @override
+  bool get isPlaying => player.playing;
 }
 
 class MockAudioPlayer implements IAudioPlayer {
@@ -105,4 +110,8 @@ class MockAudioPlayer implements IAudioPlayer {
   void seek(Duration position) {
     // TODO: implement seek
   }
+
+  @override
+  // TODO: implement isPlaying
+  bool get isPlaying => throw UnimplementedError();
 }

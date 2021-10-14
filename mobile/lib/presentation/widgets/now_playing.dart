@@ -25,7 +25,7 @@ class NowPlaying extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
                               child: IconButton(
                                 onPressed: () {
-                                  _onPlayPausePressed(state.isPlaying, context);
+                                  _onPlayPausePressed(context);
                                 },
                                 icon: state.isPlaying
                                     ? Icon(
@@ -74,8 +74,8 @@ class NowPlaying extends StatelessWidget {
     }
   }
 
-  void _onPlayPausePressed(bool isPlaying, BuildContext context) {
+  void _onPlayPausePressed(BuildContext context) {
     var bloc = context.read<AudioControllerBloc>();
-    bloc.add(MixPlayPausedEvent(isPlaying));
+    bloc.add(MixPlayPausedEvent());
   }
 }

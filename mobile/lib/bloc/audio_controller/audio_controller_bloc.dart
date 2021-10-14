@@ -36,18 +36,15 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
       status: AudioControllerStatus.HasSong,
     );
     await _musicPlayer.initialiseMix(event.mix.path);
-    _musicPlayer.playMix();
+    _musicPlayer.playPauseMix();
   }
 
   Stream<AudioControllerState> _mixPlayPaused(MixPlayPausedEvent event) async* {
     yield state.copyWith(
       AudioControllerStatus.HasSong,
-      isPlaying: !event.isPlaying,
+      isPlaying: !_musicPlayer.isPlaying,
     );
-    if (event.isPlaying)
-      _musicPlayer.pauseMix();
-    else
-      _musicPlayer.playMix();
+    _musicPlayer.playPauseMix();
   }
 
   Stream<AudioControllerState> _mixTimestampChanged(MixTimestampChangedEvent event) async* {
