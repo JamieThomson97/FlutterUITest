@@ -54,7 +54,7 @@ class NowPlayingPage extends StatelessWidget {
                                   begin: 0.0,
                                   end: audioControllerstate.isPlaying ? 0 : 12.0,
                                 ),
-                                duration: const Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 250),
                                 builder: (_, value, child) {
                                   return BackdropFilter(
                                     filter: ImageFilter.blur(sigmaX: value, sigmaY: value),
@@ -67,16 +67,6 @@ class NowPlayingPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              // ClipRRect(
-                              //   // Clip it cleanly.
-                              //   child: BackdropFilter(
-                              //     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              //     child: Container(
-                              //       color: Colors.grey.withOpacity(0.1),
-                              //       alignment: Alignment.center,
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
                         );

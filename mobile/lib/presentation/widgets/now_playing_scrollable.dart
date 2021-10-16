@@ -75,12 +75,17 @@ class NowPlayingScrollable extends StatelessWidget {
                       if (dunno == 1) height = 50 - height;
                       height = height + 30;
                       return Align(
-                        child: AnimatedContainer(
-                          alignment: Alignment.centerLeft,
+                        child: Container(
                           color: _getColour(itemCount, index, state.songPercentage),
-                          height: audioControllerState.isPlaying ? height : 2,
-                          width: 1.2,
-                          duration: Duration(milliseconds: 300),
+                          child: AnimatedSize(
+                            curve: Curves.easeIn,
+                            duration: Duration(milliseconds: 250),
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              width: 1.2,
+                              height: audioControllerState.isPlaying ? height : 2,
+                            ),
+                          ),
                         ),
                       );
                     },
