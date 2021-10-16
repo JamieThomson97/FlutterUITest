@@ -66,7 +66,7 @@ class MockMixes implements IMixesRepository {
         "event$i",
         "url$i",
         DateTime.now(),
-        4800 + i,
+        1108,
         "resources/audio/TestAudioFile.mp3",
       );
       mixes.add(mix);

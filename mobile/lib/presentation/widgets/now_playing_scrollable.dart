@@ -17,7 +17,7 @@ class NowPlayingScrollable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int itemCount = (songLength / 4).floor();
+    int itemCount = (songLength / 2).floor();
     return BlocListener<AudioControllerBloc, AudioControllerState>(
       listener: (context, state) {
         if (state.status == AudioControllerStatus.HasSong) {

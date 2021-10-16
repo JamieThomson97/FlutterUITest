@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,14 +23,11 @@ class NowPlayingPage extends StatelessWidget {
           child: Stack(
             children: [
               BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                buildWhen: (prev, current) {
-                  return current.secondsIn == 0;
-                },
-                builder: (context, state) {
+                builder: (context, audioControllerstate) {
                   return BlocProvider(
                     create: (context) => NowPlayingScrollCubit(
                       _scrollController,
-                      state.mix!,
+                      audioControllerstate.mix!,
                       context.read<AudioControllerBloc>(),
                     ),
                     child: BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
@@ -37,15 +36,19 @@ class NowPlayingPage extends StatelessWidget {
                           onTap: () {
                             context.read<AudioControllerBloc>().add(MixPlayPausedEvent());
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
-                                alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+                          child: AnimatedOpacity(
+                            duration: Duration(milliseconds: 500),
+                            opacity: audioControllerstate.isPlaying ? 1 : 0.7,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
+                                  alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+                                ),
                               ),
+                              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                             ),
-                            padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                           ),
                         );
                       },

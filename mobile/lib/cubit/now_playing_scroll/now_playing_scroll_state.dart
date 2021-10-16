@@ -2,7 +2,7 @@ part of 'now_playing_scroll_cubit.dart';
 
 class NowPlayingScrollState {
   NowPlayingScrollState({required this.songPercentage, required this.mix}) {
-    songLengthString = updatePercentage(100, mix.length);
+    songLengthString = updatePercentage(1, mix.length);
     songPositionString = updatePercentage(songPercentage, mix.length);
   }
 
