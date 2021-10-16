@@ -61,24 +61,29 @@ class NowPlayingScrollable extends StatelessWidget {
                 ),
               );
             else
-              return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
-                buildWhen: (prevState, currentState) {
-                  return _isOver(itemCount, index, prevState.songPercentage) !=
-                      _isOver(itemCount, index, currentState.songPercentage);
-                },
-                builder: (context, state) {
-                  int trig = (index / 50).floor();
-                  int dunno = trig % 2;
-                  double height = index % 50;
-                  if (dunno == 1) height = 50 - height;
-                  height = height + 30;
-                  return Align(
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      color: _getColour(itemCount, index, state.songPercentage),
-                      height: height,
-                      width: 1.2,
-                    ),
+              return BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                builder: (context, audioControllerState) {
+                  return BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+                    buildWhen: (prevState, currentState) {
+                      return _isOver(itemCount, index, prevState.songPercentage) !=
+                          _isOver(itemCount, index, currentState.songPercentage);
+                    },
+                    builder: (context, state) {
+                      int trig = (index / 50).floor();
+                      int dunno = trig % 2;
+                      double height = index % 50;
+                      if (dunno == 1) height = 50 - height;
+                      height = height + 30;
+                      return Align(
+                        child: AnimatedContainer(
+                          alignment: Alignment.centerLeft,
+                          color: _getColour(itemCount, index, state.songPercentage),
+                          height: audioControllerState.isPlaying ? height : 2,
+                          width: 1.2,
+                          duration: Duration(milliseconds: 300),
+                        ),
+                      );
+                    },
                   );
                 },
               );
