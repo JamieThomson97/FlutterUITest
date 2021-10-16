@@ -36,19 +36,48 @@ class NowPlayingPage extends StatelessWidget {
                           onTap: () {
                             context.read<AudioControllerBloc>().add(MixPlayPausedEvent());
                           },
-                          child: AnimatedOpacity(
-                            duration: Duration(milliseconds: 500),
-                            opacity: audioControllerstate.isPlaying ? 1 : 0.7,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
-                                  alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage("resources/Now_Playing_Screen/KaytranadaLive.jpeg"),
+                                    alignment: Alignment(state.songPercentage.abs() * 0.4, 0),
+                                  ),
+                                ),
+                                padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                              ),
+                              TweenAnimationBuilder<double>(
+                                tween: Tween<double>(
+                                  begin: 0.0,
+                                  end: audioControllerstate.isPlaying ? 0 : 12.0,
+                                ),
+                                duration: const Duration(milliseconds: 500),
+                                builder: (_, value, child) {
+                                  return BackdropFilter(
+                                    filter: ImageFilter.blur(sigmaX: value, sigmaY: value),
+                                    child: child,
+                                  );
+                                },
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0),
+                                  ),
                                 ),
                               ),
-                              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                            ),
+                              // ClipRRect(
+                              //   // Clip it cleanly.
+                              //   child: BackdropFilter(
+                              //     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              //     child: Container(
+                              //       color: Colors.grey.withOpacity(0.1),
+                              //       alignment: Alignment.center,
+                              //     ),
+                              //   ),
+                              // )
+                            ],
                           ),
                         );
                       },
