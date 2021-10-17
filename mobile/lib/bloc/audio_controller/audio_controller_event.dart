@@ -14,8 +14,19 @@ class MixStartedEvent extends AudioControllerEvent {
 }
 
 class MixPlayPausedEvent extends AudioControllerEvent {
-  final bool isPlaying;
-  MixPlayPausedEvent(this.isPlaying);
+  MixPlayPausedEvent();
 }
 
-class MixSeekedEvent extends AudioControllerEvent {}
+class MixTimestampChangedEvent extends AudioControllerEvent {
+  final int secondsIn;
+
+  MixTimestampChangedEvent(this.secondsIn);
+}
+
+class MixSeekStartedEvent extends AudioControllerEvent {}
+
+class MixSeekEndedEvent extends AudioControllerEvent {
+  final double songPercentage;
+
+  MixSeekEndedEvent(this.songPercentage);
+}

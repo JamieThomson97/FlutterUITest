@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:just_audio/just_audio.dart';
 
 class MusicPlayer {
   final IAudioPlayer _player;
+  Stream<Duration> get playerTickerStream => _player.playerTickerStream;
+  bool get isPlaying => _player.isPlaying;
 
   MusicPlayer(this._player);
 
@@ -9,12 +13,15 @@ class MusicPlayer {
     var duration = await _player.setFilePath(path);
   }
 
-  void playMix() {
-    _player.play();
+  void playPauseMix() {
+    if (_player.isPlaying)
+      _player.pause();
+    else
+      _player.play();
   }
 
-  void pauseMix() {
-    _player.pause();
+  void seekMix(Duration timestamp) {
+    _player.seek(timestamp);
   }
 }
 
@@ -22,10 +29,36 @@ abstract class IAudioPlayer {
   Future<Duration?> setFilePath(String path);
   void play();
   void pause();
+  void seek(Duration position);
+
+  bool get isPlaying;
+
+  Stream<Duration> get playerTickerStream;
 }
 
 class JustAudioWrapper implements IAudioPlayer {
   AudioPlayer player = AudioPlayer();
+
+// todo: Close sink
+  final StreamController<Duration> _playerTicker = StreamController<Duration>();
+  Stream<Duration> get playerTickerStream => _playerTicker.stream;
+
+  late int secondsIn = -1;
+
+  JustAudioWrapper() {
+    player.positionStream.listen((event) {
+      if (player.audioSource != null) {
+        if (secondsIn != event.inSeconds) {
+          secondsIn = event.inSeconds;
+          onChange(event);
+        }
+      }
+    });
+  }
+
+  void onChange(Duration timeStamp) {
+    _playerTicker.sink.add(timeStamp);
+  }
 
   @override
   void play() {
@@ -42,6 +75,14 @@ class JustAudioWrapper implements IAudioPlayer {
   void pause() {
     player.pause();
   }
+
+  @override
+  void seek(Duration position) {
+    player.seek(position);
+  }
+
+  @override
+  bool get isPlaying => player.playing;
 }
 
 class MockAudioPlayer implements IAudioPlayer {
@@ -60,4 +101,17 @@ class MockAudioPlayer implements IAudioPlayer {
   void pause() {
     // TODO: implement Pause
   }
+
+  @override
+  // TODO: implement playerTickerStream
+  Stream<Duration> get playerTickerStream => throw UnimplementedError();
+
+  @override
+  void seek(Duration position) {
+    // TODO: implement seek
+  }
+
+  @override
+  // TODO: implement isPlaying
+  bool get isPlaying => throw UnimplementedError();
 }

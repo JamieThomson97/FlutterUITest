@@ -9,7 +9,11 @@ part 'audio_controller_event.dart';
 part 'audio_controller_state.dart';
 
 class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerState> {
-  AudioControllerBloc() : super(AudioControllerState.audioControllerInitial());
+  AudioControllerBloc() : super(AudioControllerState.audioControllerInitial()) {
+    _musicPlayer.playerTickerStream.listen((event) {
+      _durationChanged(event);
+    });
+  }
 
   late MusicPlayer _musicPlayer = MusicPlayer(new JustAudioWrapper());
 
@@ -19,6 +23,9 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
   ) async* {
     if (event is MixStartedEvent) yield* _mixStarted(event);
     if (event is MixPlayPausedEvent) yield* _mixPlayPaused(event);
+    if (event is MixTimestampChangedEvent) yield* _mixTimestampChanged(event);
+    if (event is MixSeekStartedEvent) yield* _mixSeekStarted(event);
+    if (event is MixSeekEndedEvent) yield* _mixSeekEnded(event);
   }
 
   Stream<AudioControllerState> _mixStarted(MixStartedEvent event) async* {
@@ -29,17 +36,41 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
       status: AudioControllerStatus.HasSong,
     );
     await _musicPlayer.initialiseMix(event.mix.path);
-    _musicPlayer.playMix();
+    _musicPlayer.playPauseMix();
   }
 
   Stream<AudioControllerState> _mixPlayPaused(MixPlayPausedEvent event) async* {
     yield state.copyWith(
       AudioControllerStatus.HasSong,
-      isPlaying: !event.isPlaying,
+      isPlaying: !_musicPlayer.isPlaying,
     );
-    if (event.isPlaying)
-      _musicPlayer.pauseMix();
-    else
-      _musicPlayer.playMix();
+    _musicPlayer.playPauseMix();
+  }
+
+  Stream<AudioControllerState> _mixTimestampChanged(MixTimestampChangedEvent event) async* {
+    yield state.copyWith(
+      AudioControllerStatus.HasSong,
+      secondsIn: event.secondsIn,
+    );
+  }
+
+  bool _ignoreSeeks = false;
+
+  Stream<AudioControllerState> _mixSeekStarted(MixSeekStartedEvent event) async* {
+    _ignoreSeeks = true;
+  }
+
+  Stream<AudioControllerState> _mixSeekEnded(MixSeekEndedEvent event) async* {
+    var time = Duration(seconds: (state.mix!.length * event.songPercentage).round());
+    _musicPlayer.seekMix(time);
+    yield state.copyWith(
+      AudioControllerStatus.HasSong,
+      secondsIn: (state.mix!.length * event.songPercentage).round(),
+    );
+    _ignoreSeeks = false;
+  }
+
+  void _durationChanged(Duration timestamp) {
+    if (!_ignoreSeeks) this.add(MixTimestampChangedEvent(timestamp.inSeconds));
   }
 }

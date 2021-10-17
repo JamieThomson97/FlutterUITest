@@ -9,7 +9,11 @@ class AudioControllerState {
   final AudioControllerStatus status;
 
   static AudioControllerState audioControllerInitial() {
-    return AudioControllerState();
+    return initialState();
+  }
+
+  static AudioControllerState initialState() {
+    return AudioControllerState(status: AudioControllerStatus.NoSong);
   }
 
   AudioControllerState({
