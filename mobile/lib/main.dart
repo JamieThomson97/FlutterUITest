@@ -162,7 +162,22 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
+  static Map<String, Function> routeToWidget = {
+    "now_playing": (context) => BlocProvider.value(
+          value: BlocProvider.of<AudioControllerBloc>(context),
+          child: NowPlayingPage(),
+        ),
+  };
+
   void _navigate(String route) {
-    Navigator.of(context).pushNamed('/$route');
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (_, __, ___) {
+          return routeToWidget[route]!(context);
+        },
+      ),
+    );
   }
 }
