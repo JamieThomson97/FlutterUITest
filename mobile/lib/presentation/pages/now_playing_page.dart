@@ -217,6 +217,34 @@ class NowPlayingPage extends StatelessWidget {
                         );
                       },
                     ),
+                    SizedBox(
+                      height: 60,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NowPlayingPageIcon(
+                            icon: Icons.favorite_border_rounded,
+                            onPressed: () {},
+                          ),
+                          // todo : get better repost icon
+                          NowPlayingPageIcon(
+                            icon: Icons.sync_alt_outlined,
+                            onPressed: () {},
+                          ),
+                          NowPlayingPageIcon(
+                            icon: Icons.upcoming_rounded,
+                            onPressed: () {},
+                          ),
+                          NowPlayingPageIcon(
+                            icon: Icons.more_horiz_rounded,
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ],
@@ -224,6 +252,29 @@ class NowPlayingPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class NowPlayingPageIcon extends StatelessWidget {
+  const NowPlayingPageIcon({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final IconData icon;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+      ),
+      iconSize: 30,
+      color: Colors.white,
     );
   }
 }
