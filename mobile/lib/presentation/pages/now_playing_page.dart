@@ -14,7 +14,7 @@ class NowPlayingPage extends StatelessWidget {
   const NowPlayingPage({Key? key}) : super(key: key);
 
   static ScrollController _scrollController = ScrollController();
-  static ScrollController _panelScrollerController = ScrollController();
+  static PanelController _panelScrollerController = PanelController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +23,7 @@ class NowPlayingPage extends StatelessWidget {
       key: const Key('key'),
       onDismissed: (_) => Navigator.of(context).pop(),
       child: SlidingUpPanel(
+        controller: _panelScrollerController,
         minHeight: 0,
         panelBuilder: (sc) => _panel(sc, context),
         body: Material(
@@ -241,7 +242,9 @@ class NowPlayingPage extends StatelessWidget {
                             ),
                             NowPlayingPageIcon(
                               icon: Icons.upcoming_rounded,
-                              onPressed: () {},
+                              onPressed: () {
+                                _panelScrollerController.open();
+                              },
                             ),
                             NowPlayingPageIcon(
                               icon: Icons.more_horiz_rounded,
