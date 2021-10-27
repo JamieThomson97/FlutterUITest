@@ -10,9 +10,11 @@ part 'audio_controller_state.dart';
 
 class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerState> {
   AudioControllerBloc() : super(AudioControllerState.audioControllerInitial()) {
-    _musicPlayer.playerTickerStream.listen((event) {
-      _durationChanged(event);
-    });
+    _musicPlayer.playerTickerStream.listen(
+      (event) {
+        _durationChanged(event);
+      },
+    );
   }
 
   late MusicPlayer _musicPlayer = MusicPlayer(new JustAudioWrapper());

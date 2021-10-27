@@ -141,10 +141,31 @@ class NowPlayingPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      height: 300,
+                      height: 340,
+                    ),
+                    BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                      buildWhen: (prev, current) => prev.isPlaying != current.isPlaying,
+                      builder: (context, state) {
+                        return Center(
+                          child: AnimatedOpacity(
+                            duration: new Duration(milliseconds: 300),
+                            opacity: state.isPlaying ? 0 : 1,
+                            child: InkWell(
+                              child: Icon(
+                                Icons.play_circle_fill_rounded,
+                                color: Colors.white,
+                                size: 100,
+                              ),
+                              onTap: () {
+                                context.read<AudioControllerBloc>().add(MixPlayPausedEvent());
+                              },
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(
-                      height: 200,
+                      height: 100,
                     ),
                     BlocBuilder<AudioControllerBloc, AudioControllerState>(
                       buildWhen: (prev, current) {
@@ -172,7 +193,7 @@ class NowPlayingPage extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 35,
                     ),
                     BlocBuilder<AudioControllerBloc, AudioControllerState>(
                       // todo: this won't work
