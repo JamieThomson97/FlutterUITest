@@ -57,7 +57,6 @@ class NowPlayingScrollable extends StatelessWidget {
                   color: Colors.transparent,
                   height: 1,
                   width: 0.5,
-                  // child: Text('Item: '),
                 ),
               );
             else
@@ -69,21 +68,16 @@ class NowPlayingScrollable extends StatelessWidget {
                           _isOver(itemCount, index, currentState.songPercentage);
                     },
                     builder: (context, state) {
-                      int trig = (index / 50).floor();
-                      int dunno = trig % 2;
-                      double height = index % 50;
-                      if (dunno == 1) height = 50 - height;
-                      height = height + 30;
                       return Align(
                         child: Container(
                           color: _getColour(itemCount, index, state.songPercentage),
                           child: AnimatedSize(
-                            curve: Curves.easeIn,
+                            curve: Curves.linear,
                             duration: Duration(milliseconds: 250),
                             child: Container(
                               alignment: Alignment.centerLeft,
                               width: 1.2,
-                              height: audioControllerState.isPlaying ? height : 2,
+                              height: audioControllerState.isPlaying ? _getHeight(index) : 2,
                             ),
                           ),
                         ),
@@ -100,6 +94,15 @@ class NowPlayingScrollable extends StatelessWidget {
 
   // Todo: improve performance
   static bool areCurrentlyOver = false;
+
+  static double _getHeight(int index) {
+    int trig = (index / 50).floor();
+    int dunno = trig % 2;
+    double height = index % 50;
+    if (dunno == 1) height = 50 - height;
+    height = height + 30;
+    return height;
+  }
 
   static bool _isOver(int itemCount, int index, double percentage) {
     return percentage * itemCount > index;
