@@ -30,3 +30,9 @@ class MixSeekEndedEvent extends AudioControllerEvent {
 
   MixSeekEndedEvent(this.songPercentage);
 }
+
+class MixSongJumpedEvent extends AudioControllerEvent {
+  final int songStart;
+
+  MixSongJumpedEvent(this.songStart);
+}

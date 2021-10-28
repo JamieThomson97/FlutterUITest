@@ -28,12 +28,6 @@ class NowPlayingPage extends StatelessWidget {
           builder: (context, audioControllerState) {
             return SlidingUpPanel(
               backdropEnabled: true,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 3.0,
-                  color: Colors.black,
-                ),
-              ],
               color: Colors.transparent,
               controller: _panelScrollerController,
               maxHeight: 350,
@@ -288,6 +282,7 @@ class NowPlayingPage extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: ListView.builder(
+          controller: sc,
           itemCount: songs.length,
           itemBuilder: (BuildContext context, int index) {
             return MixSongItem(
@@ -309,47 +304,52 @@ class MixSongItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var queryData = MediaQuery.of(context);
     var textColor = Colors.white;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  song.songName,
-                  style: TextStyle(fontSize: 16, color: textColor),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  song.artistName,
-                  style: TextStyle(fontSize: 16, color: textColor),
-                ),
-              ],
-            ),
-            Spacer(),
-            Text(
-              "${song.startSeconds}",
-              style: TextStyle(fontSize: 16, color: textColor),
-            ),
-            Text(
-              " - ",
-              style: TextStyle(fontSize: 16, color: textColor),
-            ),
-            Text(
-              "${song.endSeconds}",
-              style: TextStyle(fontSize: 16, color: textColor),
-            ),
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          height: 1,
-          width: queryData.size.width,
-          decoration: BoxDecoration(color: Colors.grey),
-        )
-      ],
+    return InkWell(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    song.songName,
+                    style: TextStyle(fontSize: 16, color: textColor),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    song.artistName,
+                    style: TextStyle(fontSize: 16, color: textColor),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Text(
+                "${song.startSeconds}",
+                style: TextStyle(fontSize: 16, color: textColor),
+              ),
+              Text(
+                " - ",
+                style: TextStyle(fontSize: 16, color: textColor),
+              ),
+              Text(
+                "${song.endSeconds}",
+                style: TextStyle(fontSize: 16, color: textColor),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
+            height: 1,
+            width: queryData.size.width,
+            decoration: BoxDecoration(color: Colors.grey),
+          )
+        ],
+      ),
+      onTap: () {
+        context.read<AudioControllerBloc>().add(MixSongJumpedEvent(song.startSeconds));
+      },
     );
   }
 }

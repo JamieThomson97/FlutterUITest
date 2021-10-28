@@ -84,8 +84,8 @@ class MockSong {
       var song = Song(
         artistName: "Artist: $i",
         songName: "Song $i",
-        startSeconds: (songLength / 10 * i).floor(),
-        endSeconds: (songLength / 10 * (i + 1)).floor(),
+        startSeconds: (songLength / 10 * i - 1).floor(),
+        endSeconds: (songLength / 10 * (i)).floor(),
       );
       songs.add(song);
     }

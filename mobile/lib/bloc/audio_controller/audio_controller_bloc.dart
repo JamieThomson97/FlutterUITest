@@ -27,7 +27,12 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
     if (event is MixPlayPausedEvent) yield* _mixPlayPaused(event);
     if (event is MixTimestampChangedEvent) yield* _mixTimestampChanged(event);
     if (event is MixSeekStartedEvent) yield* _mixSeekStarted(event);
-    if (event is MixSeekEndedEvent) yield* _mixSeekEnded(event);
+    if (event is MixSeekEndedEvent) yield* _mixSeekEnded(event.songPercentage);
+    if (event is MixSongJumpedEvent) {
+      double percentage = event.songStart / state.mix!.length;
+      yield* _mixSeekEnded(percentage);
+    }
+    ;
   }
 
   Stream<AudioControllerState> _mixStarted(MixStartedEvent event) async* {
@@ -62,12 +67,12 @@ class AudioControllerBloc extends Bloc<AudioControllerEvent, AudioControllerStat
     _ignoreSeeks = true;
   }
 
-  Stream<AudioControllerState> _mixSeekEnded(MixSeekEndedEvent event) async* {
-    var time = Duration(seconds: (state.mix!.length * event.songPercentage).round());
+  Stream<AudioControllerState> _mixSeekEnded(double songPercentage) async* {
+    var time = Duration(seconds: (state.mix!.length * songPercentage).round());
     _musicPlayer.seekMix(time);
     yield state.copyWith(
       AudioControllerStatus.HasSong,
-      secondsIn: (state.mix!.length * event.songPercentage).round(),
+      secondsIn: (state.mix!.length * songPercentage).round(),
     );
     _ignoreSeeks = false;
   }
