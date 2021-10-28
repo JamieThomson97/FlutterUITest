@@ -19,11 +19,11 @@ class NowPlayingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Dismissible(
-        direction: DismissDirection.down,
-        key: const Key('key'),
-        onDismissed: (_) => Navigator.of(context).pop(),
+    return Dismissible(
+      direction: DismissDirection.down,
+      key: const Key('key'),
+      onDismissed: (_) => Navigator.of(context).pop(),
+      child: Material(
         child: BlocBuilder<AudioControllerBloc, AudioControllerState>(
           builder: (context, audioControllerState) {
             return SlidingUpPanel(

@@ -68,7 +68,7 @@ class MockMixes implements IMixesRepository {
         DateTime.now(),
         1108,
         "resources/audio/TestAudioFile.mp3",
-        MockSong.getSongs(1108),
+        MockSong.getSongs(1108, 20),
       );
       mixes.add(mix);
     }
@@ -77,14 +77,14 @@ class MockMixes implements IMixesRepository {
 }
 
 class MockSong {
-  static List<Song> getSongs(int songLength) {
+  static List<Song> getSongs(int songLength, int sections) {
     return List.generate(
-      10,
+      sections,
       (index) => Song(
-        artistName: "Artist: $index",
-        songName: "Song $index",
-        startSeconds: (songLength / 10 * (index - 1)).floor(),
-        endSeconds: (songLength / 10 * index).floor(),
+        artistName: "Artist: ${index + 1}",
+        songName: "Song ${index + 1}",
+        startSeconds: (songLength / sections * index).floor(),
+        endSeconds: (songLength / sections * (index + 1)).floor(),
       ),
     );
   }
