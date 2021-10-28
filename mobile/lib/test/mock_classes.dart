@@ -78,17 +78,14 @@ class MockMixes implements IMixesRepository {
 
 class MockSong {
   static List<Song> getSongs(int songLength) {
-    List<Song> songs = [];
-    double interval = songLength / 10;
-    for (int i = 1; i < 11; i++) {
-      var song = Song(
-        artistName: "Artist: $i",
-        songName: "Song $i",
-        startSeconds: (songLength / 10 * i - 1).floor(),
-        endSeconds: (songLength / 10 * (i)).floor(),
-      );
-      songs.add(song);
-    }
-    return songs;
+    return List.generate(
+      10,
+      (index) => Song(
+        artistName: "Artist: $index",
+        songName: "Song $index",
+        startSeconds: (songLength / 10 * (index - 1)).floor(),
+        endSeconds: (songLength / 10 * index).floor(),
+      ),
+    );
   }
 }
