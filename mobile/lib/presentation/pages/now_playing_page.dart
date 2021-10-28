@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
+import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/marquee.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
@@ -18,24 +19,32 @@ class NowPlayingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      direction: DismissDirection.vertical,
-      key: const Key('key'),
-      onDismissed: (_) => Navigator.of(context).pop(),
-      child: SlidingUpPanel(
-        controller: _panelScrollerController,
-        maxHeight: 350,
-        minHeight: 0,
-        panelBuilder: (sc) => _panel(sc, context),
-        body: Material(
-          child: SafeArea(
-            child: Container(
-              // padding: EdgeInsets.all(6),
-              child: Stack(
-                children: [
-                  BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                    builder: (context, audioControllerState) {
-                      return BlocProvider(
+    return Material(
+      child: Dismissible(
+        direction: DismissDirection.down,
+        key: const Key('key'),
+        onDismissed: (_) => Navigator.of(context).pop(),
+        child: BlocBuilder<AudioControllerBloc, AudioControllerState>(
+          builder: (context, audioControllerState) {
+            return SlidingUpPanel(
+              backdropEnabled: true,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],
+              color: Colors.transparent,
+              controller: _panelScrollerController,
+              maxHeight: 350,
+              minHeight: 0,
+              panelBuilder: (sc) => _panel(sc, context, audioControllerState.mix!.songs),
+              body: SafeArea(
+                child: Container(
+                  // padding: EdgeInsets.all(6),
+                  child: Stack(
+                    children: [
+                      BlocProvider(
                         create: (context) => NowPlayingScrollCubit(
                           _scrollController,
                           audioControllerState.mix!,
@@ -83,254 +92,263 @@ class NowPlayingPage extends StatelessWidget {
                             );
                           },
                         ),
-                      );
-                    },
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                                builder: (context, state) {
-                                  return Container(
-                                    color: Colors.white,
-                                    child: MarqueeWidget(
-                                      direction: Axis.horizontal,
-                                      text: Text(
-                                        state.mix!.producer,
-                                        style: Theme.of(context).textTheme.headline5,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                                // todo: buildWhen
-                                builder: (context, state) {
-                                  return Container(
-                                    color: Colors.white,
-                                    child: MarqueeWidget(
-                                      text: Text(
-                                        state.mix!.event,
-                                        style: Theme.of(context).textTheme.headline6,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                                // todo: buildWhen
-                                builder: (context, state) {
-                                  return Container(
-                                    color: Colors.white,
-                                    child: MarqueeWidget(
-                                      text: Text(
-                                        DateFormat('yyyy-MM-dd').format(state.mix!.dateUploaded),
-                                        style: Theme.of(context).textTheme.headline5,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        height: 340,
                       ),
-                      BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                        buildWhen: (prev, current) => prev.isPlaying != current.isPlaying,
-                        builder: (context, state) {
-                          return Center(
-                            child: AnimatedOpacity(
-                              duration: new Duration(milliseconds: 300),
-                              opacity: state.isPlaying ? 0 : 1,
-                              child: InkWell(
-                                child: Icon(
-                                  Icons.play_circle_fill_rounded,
-                                  color: Colors.white,
-                                  size: 100,
-                                ),
-                                onTap: () {
-                                  context.read<AudioControllerBloc>().add(MixPlayPausedEvent());
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 100,
-                      ),
-                      BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                        buildWhen: (prev, current) {
-                          return current.secondsIn == 0;
-                        },
-                        builder: (context, state) {
-                          return BlocProvider(
-                            create: (context) => NowPlayingScrollCubit(
-                              _scrollController,
-                              state.mix!,
-                              context.read<AudioControllerBloc>(),
-                            ),
-                            child: BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
-                              builder: (context, state) {
-                                return Container(
-                                  color: Colors.white,
-                                  child: Text(
-                                    "${state.songPositionString} | ${state.songLengthString}",
-                                    style: Theme.of(context).textTheme.headline5,
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 35,
-                      ),
-                      BlocBuilder<AudioControllerBloc, AudioControllerState>(
-                        // todo: this won't work
-                        buildWhen: (prev, current) {
-                          return current.secondsIn == 0;
-                        },
-                        builder: (context, state) {
-                          return BlocProvider(
-                            create: (context) => NowPlayingScrollCubit(
-                              _scrollController,
-                              state.mix!,
-                              context.read<AudioControllerBloc>(),
-                            ),
+                      Column(
+                        children: [
+                          SizedBox(
                             child: Container(
-                              height: 100,
-                              child: NowPlayingScrollable(
-                                scrollController: _scrollController,
-                                songLength: state.mix!.length,
+                              padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                                    builder: (context, state) {
+                                      return Container(
+                                        color: Colors.white,
+                                        child: MarqueeWidget(
+                                          direction: Axis.horizontal,
+                                          text: Text(
+                                            state.mix!.producer,
+                                            style: Theme.of(context).textTheme.headline5,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                                    // todo: buildWhen
+                                    builder: (context, state) {
+                                      return Container(
+                                        color: Colors.white,
+                                        child: MarqueeWidget(
+                                          text: Text(
+                                            state.mix!.event,
+                                            style: Theme.of(context).textTheme.headline6,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                                    // todo: buildWhen
+                                    builder: (context, state) {
+                                      return Container(
+                                        color: Colors.white,
+                                        child: MarqueeWidget(
+                                          text: Text(
+                                            DateFormat('yyyy-MM-dd').format(state.mix!.dateUploaded),
+                                            style: Theme.of(context).textTheme.headline5,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        },
+                            height: 340,
+                          ),
+                          BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                            buildWhen: (prev, current) => prev.isPlaying != current.isPlaying,
+                            builder: (context, state) {
+                              return Center(
+                                child: AnimatedOpacity(
+                                  duration: new Duration(milliseconds: 300),
+                                  opacity: state.isPlaying ? 0 : 1,
+                                  child: InkWell(
+                                    child: Icon(
+                                      Icons.play_circle_fill_rounded,
+                                      color: Colors.white,
+                                      size: 100,
+                                    ),
+                                    onTap: () {
+                                      context.read<AudioControllerBloc>().add(MixPlayPausedEvent());
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 100,
+                          ),
+                          BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                            buildWhen: (prev, current) {
+                              return current.secondsIn == 0;
+                            },
+                            builder: (context, state) {
+                              return BlocProvider(
+                                create: (context) => NowPlayingScrollCubit(
+                                  _scrollController,
+                                  state.mix!,
+                                  context.read<AudioControllerBloc>(),
+                                ),
+                                child: BlocBuilder<NowPlayingScrollCubit, NowPlayingScrollState>(
+                                  builder: (context, state) {
+                                    return Container(
+                                      color: Colors.white,
+                                      child: Text(
+                                        "${state.songPositionString} | ${state.songLengthString}",
+                                        style: Theme.of(context).textTheme.headline5,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 35,
+                          ),
+                          BlocBuilder<AudioControllerBloc, AudioControllerState>(
+                            // todo: this won't work
+                            buildWhen: (prev, current) {
+                              return current.secondsIn == 0;
+                            },
+                            builder: (context, state) {
+                              return BlocProvider(
+                                create: (context) => NowPlayingScrollCubit(
+                                  _scrollController,
+                                  state.mix!,
+                                  context.read<AudioControllerBloc>(),
+                                ),
+                                child: Container(
+                                  height: 100,
+                                  child: NowPlayingScrollable(
+                                    scrollController: _scrollController,
+                                    songLength: state.mix!.length,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 60,
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                NowPlayingPageIcon(
+                                  icon: Icons.favorite_border_rounded,
+                                  onPressed: () {},
+                                ),
+                                // todo : get better repost icon
+                                NowPlayingPageIcon(
+                                  icon: Icons.sync_alt_outlined,
+                                  onPressed: () {},
+                                ),
+                                NowPlayingPageIcon(
+                                  icon: Icons.upcoming_rounded,
+                                  onPressed: () {
+                                    _panelScrollerController.open();
+                                  },
+                                ),
+                                NowPlayingPageIcon(
+                                  icon: Icons.more_horiz_rounded,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                      SizedBox(
-                        height: 60,
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            NowPlayingPageIcon(
-                              icon: Icons.favorite_border_rounded,
-                              onPressed: () {},
-                            ),
-                            // todo : get better repost icon
-                            NowPlayingPageIcon(
-                              icon: Icons.sync_alt_outlined,
-                              onPressed: () {},
-                            ),
-                            NowPlayingPageIcon(
-                              icon: Icons.upcoming_rounded,
-                              onPressed: () {
-                                _panelScrollerController.open();
-                              },
-                            ),
-                            NowPlayingPageIcon(
-                              icon: Icons.more_horiz_rounded,
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _panel(ScrollController sc, BuildContext context) {
-    return MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            controller: sc,
-            children: <Widget>[
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-              MixSongItem(),
-            ],
-          ),
-        ));
+  Widget _panel(ScrollController sc, BuildContext context, List<Song> songs) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.withOpacity(0.9),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        child: ListView.builder(
+          itemCount: songs.length,
+          itemBuilder: (BuildContext context, int index) {
+            return MixSongItem(
+              song: songs[index],
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 
 class MixSongItem extends StatelessWidget {
-  const MixSongItem({
-    Key? key,
-  }) : super(key: key);
+  const MixSongItem({Key? key, required this.song}) : super(key: key);
+
+  final Song song;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    var queryData = MediaQuery.of(context);
+    var textColor = Colors.white;
+    return Column(
       children: [
-        Column(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Song name",
-                style: TextStyle(fontSize: 16),
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  song.songName,
+                  style: TextStyle(fontSize: 16, color: textColor),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  song.artistName,
+                  style: TextStyle(fontSize: 16, color: textColor),
+                ),
+              ],
+            ),
+            Spacer(),
+            Text(
+              "${song.startSeconds}",
+              style: TextStyle(fontSize: 16, color: textColor),
             ),
             Text(
-              "Artist name",
-              style: TextStyle(fontSize: 16),
+              " - ",
+              style: TextStyle(fontSize: 16, color: textColor),
+            ),
+            Text(
+              "${song.endSeconds}",
+              style: TextStyle(fontSize: 16, color: textColor),
             ),
           ],
         ),
-        Spacer(),
-        Text(
-          "Start time",
-          style: TextStyle(fontSize: 16),
-        ),
-        Text(
-          " - ",
-          style: TextStyle(fontSize: 16),
-        ),
-        Text(
-          "End time",
-          style: TextStyle(fontSize: 16),
-        ),
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
+          height: 1,
+          width: queryData.size.width,
+          decoration: BoxDecoration(color: Colors.grey),
+        )
       ],
     );
   }

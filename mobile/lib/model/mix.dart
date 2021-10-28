@@ -13,6 +13,7 @@ class Mix extends Equatable {
   final int length;
   final Color color;
   final String path;
+  final List<Song> songs;
 
   Mix(
     this.id,
@@ -23,6 +24,7 @@ class Mix extends Equatable {
     this.dateUploaded,
     this.length,
     this.path,
+    this.songs,
   ) : color = Extensions.GetRandomColor();
 
   @override
@@ -30,4 +32,18 @@ class Mix extends Equatable {
 
   @override
   toString() => "Mix - Name:$name. Producer: $producer";
+}
+
+class Song {
+  final String artistName;
+  final String songName;
+  final int startSeconds;
+  final int endSeconds;
+
+  Song({
+    required this.artistName,
+    required this.songName,
+    required this.startSeconds,
+    required this.endSeconds,
+  });
 }

@@ -68,9 +68,27 @@ class MockMixes implements IMixesRepository {
         DateTime.now(),
         1108,
         "resources/audio/TestAudioFile.mp3",
+        MockSong.getSongs(1108),
       );
       mixes.add(mix);
     }
     return mixes;
+  }
+}
+
+class MockSong {
+  static List<Song> getSongs(int songLength) {
+    List<Song> songs = [];
+    double interval = songLength / 10;
+    for (int i = 1; i < 11; i++) {
+      var song = Song(
+        artistName: "Artist: $i",
+        songName: "Song $i",
+        startSeconds: (songLength / 10 * i).floor(),
+        endSeconds: (songLength / 10 * (i + 1)).floor(),
+      );
+      songs.add(song);
+    }
+    return songs;
   }
 }
