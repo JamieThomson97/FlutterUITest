@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/model/user.dart';
@@ -64,7 +65,7 @@ class MockMixes implements IMixesRepository {
         "name$i",
         "Collection: $collection $i",
         "event$i",
-        "url$i",
+        "resources/images/album_artwork_${new Random().nextInt(11) + 1}.jpeg",
         DateTime.now(),
         1108,
         "resources/audio/TestAudioFile.mp3",

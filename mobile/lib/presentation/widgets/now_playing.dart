@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/screens/screens_cubit.dart';
+import 'package:vibration/model/mix.dart';
 
 class NowPlaying extends StatelessWidget {
   const NowPlaying({
@@ -13,56 +16,100 @@ class NowPlaying extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AudioControllerBloc, AudioControllerState>(
       builder: (blockContext, state) {
-        return Container(
-          height: 80,
-          color: state.status == AudioControllerStatus.HasSong ? state.mix!.color : Colors.grey,
-          child: SizedBox.expand(
-            child: state.status == AudioControllerStatus.HasSong
-                ? Row(
+        return state.status == AudioControllerStatus.HasSong ? PopulatedNowPlaying(state: state) : Text(" ");
+      },
+    );
+  }
+}
+
+class PopulatedNowPlaying extends StatelessWidget {
+  const PopulatedNowPlaying({Key? key, required this.state}) : super(key: key);
+
+  final AudioControllerState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 70,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: ExactAssetImage(state.mix!.imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.black.withOpacity(0.1),
+                child: InkWell(
+                  onTap: () => _pushToNowPlaying(context, state),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                          child: IconButton(
-                            onPressed: () {
-                              _onPlayPausePressed(context);
-                            },
-                            icon: state.isPlaying
-                                ? Icon(
-                                    Icons.pause_circle_outline,
-                                  )
-                                : Icon(
-                                    Icons.play_arrow_outlined,
-                                  ),
-                          )),
-                      InkWell(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(state.mix!.name),
-                            Text(state.mix!.producer),
-                          ],
-                        ),
-                        onTap: () => _pushToNowPlaying(context, state),
-                      ),
-                      InkWell(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                        padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                        child: InkWell(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [Text("${state.mix!.length} /"), Text(state.secondsIn.toString())],
+                            children: [
+                              Text(
+                                state.mix!.name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                state.mix!.producer,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
                           ),
+                          onTap: () => _pushToNowPlaying(context, state),
                         ),
-                        onTap: () => _pushToNowPlaying(context, state),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                        child: IconButton(
+                          onPressed: () {
+                            _onPlayPausePressed(context);
+                          },
+                          icon: state.isPlaying
+                              ? Icon(
+                                  Icons.pause_outlined,
+                                  color: Colors.white,
+                                )
+                              : Icon(
+                                  Icons.play_arrow_outlined,
+                                  color: Colors.white,
+                                ),
+                        ),
+                      ),
                     ],
-                  )
-                : Center(
-                    child: Text("Now playing"),
                   ),
+                ),
+              ),
+            ),
           ),
-        );
-      },
+        ),
+        BlocBuilder<AudioControllerBloc, AudioControllerState>(
+          builder: (context, state) {
+            return Container(
+              color: Colors.teal,
+              height: 4,
+              width: (state.secondsIn / state.mix!.length) * MediaQuery.of(context).size.width,
+            );
+          },
+        )
+      ],
     );
   }
 

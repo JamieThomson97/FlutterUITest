@@ -84,34 +84,3 @@ class JustAudioWrapper implements IAudioPlayer {
   @override
   bool get isPlaying => player.playing;
 }
-
-class MockAudioPlayer implements IAudioPlayer {
-  @override
-  void play() {
-    // TODO: implement play
-  }
-
-  @override
-  Future<Duration?> setFilePath(String path) {
-    // TODO: implement setFilePath
-    throw UnimplementedError();
-  }
-
-  @override
-  void pause() {
-    // TODO: implement Pause
-  }
-
-  @override
-  // TODO: implement playerTickerStream
-  Stream<Duration> get playerTickerStream => throw UnimplementedError();
-
-  @override
-  void seek(Duration position) {
-    // TODO: implement seek
-  }
-
-  @override
-  // TODO: implement isPlaying
-  bool get isPlaying => throw UnimplementedError();
-}

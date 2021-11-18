@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/app/app_bloc.dart';
 import 'package:vibration/presentation/pages/home_page.dart';
 import 'package:vibration/presentation/pages/now_playing_page.dart';
+import 'package:vibration/presentation/pages/search_page.dart';
 import 'package:vibration/presentation/widgets/now_playing.dart';
 import 'package:vibration/repository/authentication_repository.dart';
 import 'package:vibration/test/mock_classes.dart';
@@ -93,10 +94,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       'Index 2: Lightbulb',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: Search',
-      style: optionStyle,
-    ),
+    SearchPage(),
     Text(
       'Index 4: Library',
       style: optionStyle,

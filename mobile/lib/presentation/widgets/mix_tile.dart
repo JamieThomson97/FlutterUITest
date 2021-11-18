@@ -26,11 +26,11 @@ class MixTile extends StatelessWidget {
                   offset: Offset(0, 0), // changes position of shadow
                 ),
               ],
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              borderRadius: BorderRadius.all(Radius.circular(0)),
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage(
-                  "resources/images/album_artwork_${new Random().nextInt(11) + 1}.jpeg",
+                  mix.imageUrl,
                 ),
               ),
             ),
