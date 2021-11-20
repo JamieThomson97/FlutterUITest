@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/screens/screens_cubit.dart';
 import 'package:vibration/model/mix.dart';
+import 'package:vibration/presentation/widgets/misc.dart';
 
 class NowPlaying extends StatelessWidget {
   const NowPlaying({
@@ -43,7 +44,7 @@ class PopulatedNowPlaying extends StatelessWidget {
           ),
           child: ClipRRect(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
               child: Container(
                 alignment: Alignment.center,
                 color: Colors.black.withOpacity(0.1),
@@ -59,17 +60,12 @@ class PopulatedNowPlaying extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              BackgroundText(
                                 state.mix!.name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
-                              Text(
+                              SizedBox(height: 2),
+                              BackgroundText(
                                 state.mix!.producer,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               )
                             ],
                           ),

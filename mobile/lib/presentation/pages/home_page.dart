@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
         children: <Widget>[
           BlocBuilder<AppBloc, AppState>(
             builder: (context, state) {

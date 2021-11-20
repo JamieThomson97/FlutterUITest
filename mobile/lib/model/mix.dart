@@ -14,6 +14,7 @@ class Mix extends Equatable {
   final Color color;
   final String path;
   final List<Song> songs;
+  final PaletteGenerate
 
   Mix(
     this.id,

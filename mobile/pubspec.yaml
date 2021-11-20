@@ -40,6 +40,7 @@ dependencies:
   bloc_test: 8.2.0
   just_audio: ^0.9.12
   sliding_up_panel: ^2.0.0+1
+  palette_generator: ^0.3.2
 
 dev_dependencies:
   flutter_test:
