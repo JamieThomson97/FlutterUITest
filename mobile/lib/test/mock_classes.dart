@@ -60,10 +60,10 @@ class MockMixes implements IMixesRepository {
   static List<Mix> getMockMixes(int number, String collection) {
     List<Mix> mixes = [];
     for (int i = 0; i < number; i++) {
-      var mix = Mix(
+      var mix = Mix.withColors(
         "id$i",
         "name$i",
-        "Collection: $collection $i",
+        "producer$i",
         "event$i",
         "resources/images/album_artwork_${new Random().nextInt(11) + 1}.jpeg",
         DateTime.now(),

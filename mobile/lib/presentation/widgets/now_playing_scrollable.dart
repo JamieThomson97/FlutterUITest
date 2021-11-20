@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 
@@ -70,7 +71,12 @@ class NowPlayingScrollable extends StatelessWidget {
                     builder: (context, state) {
                       return Align(
                         child: Container(
-                          color: _getColour(itemCount, index, state.songPercentage),
+                          color: _getColour(
+                            itemCount,
+                            index,
+                            state.songPercentage,
+                            audioControllerState.mix!.palette,
+                          ),
                           child: AnimatedSize(
                             curve: Curves.linear,
                             duration: Duration(milliseconds: 250),
@@ -108,13 +114,13 @@ class NowPlayingScrollable extends StatelessWidget {
     return percentage * itemCount > index;
   }
 
-  static Color _getColour(int itemCount, int index, double percentage) {
+  static Color _getColour(int itemCount, int index, double percentage, PaletteGenerator pallete) {
     var isOver = percentage * itemCount > index;
     // if (isOver != areCurrentlyOver) {
     //   print("index: $index , itemCount as percentage: ${percentage * index} ,percentage: $percentage, isOver: $isOver");
     //   areCurrentlyOver = isOver;
     // }
-    return isOver ? Colors.red : Colors.green;
+    return isOver ? pallete.darkVibrantColor!.color : Colors.white;
   }
 
   static bool _ignoreScrolling = false;

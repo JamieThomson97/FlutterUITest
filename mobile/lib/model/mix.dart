@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 import 'extensions.dart';
 
@@ -11,10 +12,9 @@ class Mix extends Equatable {
   final String imageUrl;
   final DateTime dateUploaded;
   final int length;
-  final Color color;
   final String path;
   final List<Song> songs;
-  final PaletteGenerate
+  late PaletteGenerator palette;
 
   Mix(
     this.id,
@@ -26,7 +26,14 @@ class Mix extends Equatable {
     this.length,
     this.path,
     this.songs,
-  ) : color = Extensions.GetRandomColor();
+  );
+
+  Mix.withColors(this.id, this.name, this.producer, this.event, this.imageUrl, this.dateUploaded, this.length,
+      this.path, this.songs) {
+    PaletteGenerator.fromImageProvider(AssetImage(imageUrl)).then((value) {
+      this.palette = value;
+    });
+  }
 
   @override
   List<Object> get props => [id];
