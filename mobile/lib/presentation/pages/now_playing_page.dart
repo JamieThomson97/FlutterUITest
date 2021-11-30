@@ -9,6 +9,7 @@ import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/cubit/now_playing_scroll/now_playing_scroll_cubit.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/marquee.dart';
+import 'package:vibration/presentation/widgets/misc.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
 
 class NowPlayingPage extends StatelessWidget {
@@ -104,9 +105,10 @@ class NowPlayingPage extends StatelessWidget {
                                       color: Colors.white,
                                       child: MarqueeWidget(
                                         direction: Axis.horizontal,
-                                        text: Text(
+                                        text: Misc.getBackgroundedText(
                                           state.mix!.producer,
-                                          style: Theme.of(context).textTheme.headline5,
+                                          color: state.mix!.color,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     );
@@ -121,10 +123,10 @@ class NowPlayingPage extends StatelessWidget {
                                     return Container(
                                       color: Colors.white,
                                       child: MarqueeWidget(
-                                        text: Text(
+                                        text: Misc.getBackgroundedText(
                                           state.mix!.event,
-                                          style: Theme.of(context).textTheme.headline6,
-                                          textAlign: TextAlign.left,
+                                          color: state.mix!.color,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     );
@@ -139,10 +141,12 @@ class NowPlayingPage extends StatelessWidget {
                                     return Container(
                                       color: Colors.white,
                                       child: MarqueeWidget(
-                                        text: Text(
-                                          DateFormat('yyyy-MM-dd').format(state.mix!.dateUploaded),
-                                          style: Theme.of(context).textTheme.headline5,
-                                          textAlign: TextAlign.left,
+                                        text: Misc.getBackgroundedText(
+                                          DateFormat('yyyy-MM-dd').format(
+                                            state.mix!.dateUploaded,
+                                          ),
+                                          color: state.mix!.color,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     );
@@ -192,9 +196,10 @@ class NowPlayingPage extends StatelessWidget {
                                 builder: (context, state) {
                                   return Container(
                                     color: Colors.white,
-                                    child: Text(
+                                    child: Misc.getBackgroundedText(
                                       "${state.songPositionString} | ${state.songLengthString}",
-                                      style: Theme.of(context).textTheme.headline5,
+                                      fontSize: 20,
+                                      color: state.mix.color,
                                     ),
                                   );
                                 },
@@ -228,7 +233,7 @@ class NowPlayingPage extends StatelessWidget {
                           },
                         ),
                         SizedBox(
-                          height: 60,
+                          height: 130,
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),

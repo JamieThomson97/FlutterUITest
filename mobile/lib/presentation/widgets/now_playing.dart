@@ -60,11 +60,11 @@ class PopulatedNowPlaying extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              BackgroundText(
+                              Misc.getBackgroundedText(
                                 state.mix!.name,
                               ),
                               SizedBox(height: 2),
-                              BackgroundText(
+                              Misc.getBackgroundedText(
                                 state.mix!.producer,
                               )
                             ],
@@ -99,7 +99,7 @@ class PopulatedNowPlaying extends StatelessWidget {
         BlocBuilder<AudioControllerBloc, AudioControllerState>(
           builder: (context, state) {
             return Container(
-              color: Colors.teal,
+              color: state.mix!.color,
               height: 4,
               width: (state.secondsIn / state.mix!.length) * MediaQuery.of(context).size.width,
             );

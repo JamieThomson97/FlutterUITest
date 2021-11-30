@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
+import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/model/user.dart';
 import 'package:vibration/repository/authentication_repository.dart';
@@ -89,4 +91,17 @@ class MockSong {
       ),
     );
   }
+
+  // ListView colorPalette(AudioControllerState audioControllerState) {
+  //   return ListView.builder(
+  //     itemCount: audioControllerState.mix!.palette.colors.length,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return Container(
+  //         height: 50,
+  //         color: audioControllerState.mix!.palette.colors.toList()[index],
+  //         child: Center(child: Text('Entry $index')),
+  //       );
+  //     },
+  //   );
+  // }
 }

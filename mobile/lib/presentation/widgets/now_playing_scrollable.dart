@@ -75,7 +75,7 @@ class NowPlayingScrollable extends StatelessWidget {
                             itemCount,
                             index,
                             state.songPercentage,
-                            audioControllerState.mix!.palette,
+                            audioControllerState.mix!.color,
                           ),
                           child: AnimatedSize(
                             curve: Curves.linear,
@@ -114,13 +114,13 @@ class NowPlayingScrollable extends StatelessWidget {
     return percentage * itemCount > index;
   }
 
-  static Color _getColour(int itemCount, int index, double percentage, PaletteGenerator pallete) {
+  static Color _getColour(int itemCount, int index, double percentage, Color color) {
     var isOver = percentage * itemCount > index;
     // if (isOver != areCurrentlyOver) {
     //   print("index: $index , itemCount as percentage: ${percentage * index} ,percentage: $percentage, isOver: $isOver");
     //   areCurrentlyOver = isOver;
     // }
-    return isOver ? pallete.darkVibrantColor!.color : Colors.white;
+    return isOver ? color : Colors.white;
   }
 
   static bool _ignoreScrolling = false;

@@ -14,7 +14,7 @@ class Mix extends Equatable {
   final int length;
   final String path;
   final List<Song> songs;
-  late PaletteGenerator palette;
+  late Color color;
 
   Mix(
     this.id,
@@ -31,7 +31,7 @@ class Mix extends Equatable {
   Mix.withColors(this.id, this.name, this.producer, this.event, this.imageUrl, this.dateUploaded, this.length,
       this.path, this.songs) {
     PaletteGenerator.fromImageProvider(AssetImage(imageUrl)).then((value) {
-      this.palette = value;
+      this.color = value.colors.toList()[7];
     });
   }
 
