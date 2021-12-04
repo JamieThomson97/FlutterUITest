@@ -30,9 +30,10 @@ class Mix extends Equatable {
 
   Mix.withColors(this.id, this.name, this.producer, this.event, this.imageUrl, this.dateUploaded, this.length,
       this.path, this.songs) {
-    PaletteGenerator.fromImageProvider(AssetImage(imageUrl)).then((value) {
-      this.color = value.colors.toList()[7];
-    });
+    this.color = Color.fromRGBO(139, 190, 182, 1);
+    // PaletteGenerator.fromImageProvider(AssetImage(imageUrl)).then((value) {
+    //   this.color = value.colors.toList()[7];
+    // });
   }
 
   @override
