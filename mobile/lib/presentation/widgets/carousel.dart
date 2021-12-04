@@ -29,6 +29,9 @@ class Carousel extends StatelessWidget {
             HeadlineText(title),
             BlocBuilder<MixesBloc, MixesState>(
               builder: (context, state) {
+                if (state is MixesInitial) {
+                  return Text("Initial");
+                }
                 if (state is MixesLoadInProgress) {
                   return Text("In progress");
                 } else if (state is MixesLoadSuccessful) {

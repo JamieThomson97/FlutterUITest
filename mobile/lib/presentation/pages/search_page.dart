@@ -14,8 +14,8 @@ class SearchPage extends StatelessWidget {
     );
 
     return Material(
-        child: ListView(
-      padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+      child: ListView(
+        padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
         children: <Widget>[
           TitleBar(userName: "Jamie"),
           listSpacer,

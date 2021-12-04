@@ -26,7 +26,7 @@ class MixTile extends StatelessWidget {
                   offset: Offset(0, 0), // changes position of shadow
                 ),
               ],
-              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage(
@@ -36,7 +36,9 @@ class MixTile extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                context.read<AudioControllerBloc>().add(MixStartedEvent(mix));
+                context.read<AudioControllerBloc>().add(
+                      MixStartedEvent(mix),
+                    );
               },
             ),
             height: 145,
