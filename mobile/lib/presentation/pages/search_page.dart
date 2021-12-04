@@ -1,3 +1,5 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibration/cubit/changeable_filter/changeable_filter_cubit.dart';
 import 'package:vibration/presentation/widgets/title_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +77,23 @@ class ChangeableSearchOptions extends StatelessWidget {
                   return selectableFilter("Live shows $index");
                 },
               ),
-            )
+            ),
+            BlocBuilder<ChangeableFilterCubit, ChangeableFilterState>(
+              builder: (context, state) {
+                return ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        width: 1,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        width: 1,
+                      );
+                    },
+                    itemCount: 10);
+              },
+            ),
           ],
         ),
       ),
