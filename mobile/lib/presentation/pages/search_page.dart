@@ -113,11 +113,12 @@ class PopulatedFilter extends StatelessWidget {
           ),
         ),
         Container(
-          decoration: BoxDecoration(color: PresentationUtils.backgroundGrey),
           margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
           height: PresentationUtils.getHeight(context) * 0.3,
           width: PresentationUtils.getWidth(context),
           child: Container(
+            color: Colors.red,
+            decoration: BoxDecoration(color: PresentationUtils.backgroundGrey),
             child: MixTile(state.mixes.getRandom()),
             margin: EdgeInsets.all(5),
           ),
