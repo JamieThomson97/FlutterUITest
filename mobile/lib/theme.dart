@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 
 ThemeData theme = ThemeData(
@@ -27,3 +30,48 @@ ThemeData theme = ThemeData(
     ),
   ),
 );
+
+class PresentationUtils {
+  static Color backgroundGrey = Colors.grey[200]!;
+
+  static double getWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  static double getHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+}
+
+extension ListExtensions<T> on List<T> {
+  T getRandom() => this[Random().nextInt(this.length)];
+}
+
+class CustomBoxShadow extends BoxShadow {
+  final BlurStyle blurStyle;
+
+  const CustomBoxShadow({
+    Color color = const Color(0xFF000000),
+    Offset offset = Offset.zero,
+    double blurRadius = 0.0,
+    this.blurStyle = BlurStyle.normal,
+    double spreadRadius = 0,
+  }) : super(
+          color: color,
+          offset: offset,
+          blurRadius: blurRadius,
+          spreadRadius: spreadRadius,
+        );
+
+  @override
+  Paint toPaint() {
+    final Paint result = Paint()
+      ..color = color
+      ..maskFilter = MaskFilter.blur(this.blurStyle, blurSigma);
+    assert(() {
+      if (debugDisableShadows) result.maskFilter = null;
+      return true;
+    }());
+    return result;
+  }
+}

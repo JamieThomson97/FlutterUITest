@@ -8,9 +8,16 @@ part 'changeable_filter_state.dart';
 class ChangeableFilterCubit extends Cubit<ChangeableFilterState> {
   ChangeableFilterCubit(this.filterGetter)
       : super(
-          ChangeableFilterInitial(List.empty()),
+          ChangeableFilterInitial(List.empty(), List.empty()),
         ) {
     filterToMixes = filterGetter.getFilteredMixes();
+    emit(
+      ChangeableFilterChanged(
+        filterToMixes.keys.toList(),
+        filterToMixes.keys.first,
+        filterToMixes[filterToMixes.keys.first]!,
+      ),
+    );
   }
 
   final IFilterGetter filterGetter;
@@ -27,6 +34,10 @@ abstract class IFilterGetter {
 class MockFilterGetter implements IFilterGetter {
   @override
   Map<String, List<Mix>> getFilteredMixes() {
-    return {"test": MockMixes.getMockMixes(5, "test")};
+    return {
+      "test 1": MockMixes.getMockMixes(5, "test"),
+      "test 2": MockMixes.getMockMixes(5, "test"),
+      "test 3": MockMixes.getMockMixes(5, "test"),
+    };
   }
 }

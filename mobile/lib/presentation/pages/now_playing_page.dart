@@ -11,6 +11,7 @@ import 'package:vibration/model/mix.dart';
 import 'package:vibration/presentation/widgets/marquee.dart';
 import 'package:vibration/presentation/widgets/misc.dart';
 import 'package:vibration/presentation/widgets/now_playing_scrollable.dart';
+import 'package:vibration/theme.dart';
 
 class NowPlayingPage extends StatelessWidget {
   const NowPlayingPage({Key? key}) : super(key: key);
@@ -308,7 +309,6 @@ class MixSongItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var queryData = MediaQuery.of(context);
     var textColor = Colors.white;
     return InkWell(
       child: Column(
@@ -348,13 +348,15 @@ class MixSongItem extends StatelessWidget {
           Container(
             margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
             height: 1,
-            width: queryData.size.width,
+            width: PresentationUtils.getWidth(context),
             decoration: BoxDecoration(color: Colors.grey),
           )
         ],
       ),
       onTap: () {
-        context.read<AudioControllerBloc>().add(MixSongJumpedEvent(song.startSeconds));
+        context.read<AudioControllerBloc>().add(
+              MixSongJumpedEvent(song.startSeconds),
+            );
       },
     );
   }
