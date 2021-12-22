@@ -34,13 +34,11 @@ class MixTile extends StatelessWidget {
                 ),
               ),
             ),
-            child: InkWell(
-              onTap: () {
-                context.read<AudioControllerBloc>().add(
-                      MixStartedEvent(mix),
-                    );
-              },
-            ),
+            child: InkWell(onTap: () {
+              context.read<AudioControllerBloc>().add(
+                    MixStartedEvent(mix),
+                  );
+            }),
             height: 145,
             width: 145,
           ),
