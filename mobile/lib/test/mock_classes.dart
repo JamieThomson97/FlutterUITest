@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
+import 'package:vibration/cubit/search/search_cubit.dart';
 import 'package:vibration/model/mix.dart';
 import 'package:vibration/model/user.dart';
 import 'package:vibration/repository/authentication_repository.dart';
@@ -104,4 +105,11 @@ class MockSong {
   //     },
   //   );
   // }
+}
+
+class MockSearcher implements ISearcher {
+  @override
+  List<Mix> getMixes(String search) {
+    return MockMixes.getMockMixes(10, "search");
+  }
 }

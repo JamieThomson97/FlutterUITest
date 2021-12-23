@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/src/provider.dart';
 import 'package:vibration/bloc/audio_controller/audio_controller_bloc.dart';
 import 'package:vibration/model/mix.dart';
 
 import '../../theme.dart';
 
-class MixTile extends StatelessWidget {
-  MixTile(this.mix);
+class SearchMix extends StatelessWidget {
+  const SearchMix(this.mix) : super();
+
   final Mix mix;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -37,9 +40,7 @@ class MixTile extends StatelessWidget {
                   image: AssetImage(mix.imageUrl),
                 ),
                 onTap: () {
-                  context.read<AudioControllerBloc>().add(
-                        MixStartedEvent(mix),
-                      );
+                  context.read<AudioControllerBloc>().add(MixStartedEvent(mix));
                 },
               ),
             ),

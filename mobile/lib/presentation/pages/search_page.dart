@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/cubit/changeable_filter/changeable_filter_cubit.dart';
-import 'package:vibration/presentation/widgets/carousel.dart';
+import 'package:vibration/cubit/search/search_cubit.dart';
+import 'package:vibration/cubit/search/search_state.dart';
 import 'package:vibration/presentation/widgets/mix_tile.dart';
+import 'package:vibration/presentation/widgets/search_mix.dart';
 import 'package:vibration/presentation/widgets/title_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/test/mock_classes.dart';
 import 'package:vibration/theme.dart';
 
 class SearchPage extends StatelessWidget {
@@ -19,17 +21,56 @@ class SearchPage extends StatelessWidget {
     );
 
     return Material(
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
-        children: <Widget>[
-          TitleBar(userName: "Jamie"),
-          listSpacer,
-          PasswordBox(),
-          SizedBox(height: 15),
-          ChangeableSearchOptions()
-        ],
+      child: BlocProvider(
+        create: (context) => SearchCubit(MockSearcher()),
+        child: BlocBuilder<SearchCubit, SearchState>(
+          builder: (context, state) {
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+              children: <Widget>[
+                TitleBar(userName: "Jamie"),
+                listSpacer,
+                PasswordBox(),
+                SizedBox(height: 15),
+                if (state.mixes.length > 1) SearchResult(state) else Text("Search something arsehole"),
+              ],
+            );
+          },
+        ),
       ),
     );
+  }
+}
+
+class SearchResult extends StatelessWidget {
+  const SearchResult(this.state) : super();
+
+  final SearchState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        height: PresentationUtils.getHeight(context) * 0.7,
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            return Row(
+              children: [
+                SearchMix(state.mixes[index]),
+                if (index == 0)
+                  SearchMix(
+                    index == 0 ? state.mixes.last : state.mixes[index * 2],
+                  )
+              ],
+            );
+          },
+          separatorBuilder: (context, index) {
+            return SizedBox(
+              height: 5,
+            );
+          },
+          itemCount: (state.mixes.length / 2).floor(),
+        ));
   }
 }
 
@@ -61,10 +102,17 @@ class PasswordBox extends StatelessWidget {
             hintText: 'search',
             hintStyle: TextStyle(color: Colors.grey),
           ),
+          onChanged: (term) {
+            _searchChanged(term, context);
+          },
         ),
       ),
     );
   }
+}
+
+void _searchChanged(String term, BuildContext context) {
+  context.read<SearchCubit>().searchTermChanged(term);
 }
 
 class ChangeableSearchOptions extends StatelessWidget {
@@ -117,7 +165,7 @@ class PopulatedFilter extends StatelessWidget {
           height: PresentationUtils.getHeight(context) * 0.3,
           width: PresentationUtils.getWidth(context),
           child: Container(
-            color: Colors.red,
+            //  color: Colors.red,
             decoration: BoxDecoration(color: PresentationUtils.backgroundGrey),
             child: MixTile(state.mixes.getRandom()),
             margin: EdgeInsets.all(5),
