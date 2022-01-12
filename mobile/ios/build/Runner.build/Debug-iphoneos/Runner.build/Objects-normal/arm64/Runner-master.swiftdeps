@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)"
+options: "83cb2a31147140f43b2b6b5598044a115c2a8859d226d76ed1de8762a6c3b763"
+build_start_time: [1642018858, 8366107]
+build_end_time: [1642018858, 69682121]
+inputs:
+  "/Users/jamiethomson/Git/Vibration-v2/mobile/ios/Runner/AppDelegate.swift": !private [1623503631, 686947584]
