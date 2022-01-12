@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>690011461196-mavnvrqvav588rlbc6ikph07adt742oa.apps.googleusercontent.com</string>
+	<string>98138805062-duhn19hsqmuqiies5p8vpmcjbeq12bkn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.690011461196-mavnvrqvav588rlbc6ikph07adt742oa</string>
+	<string>com.googleusercontent.apps.98138805062-duhn19hsqmuqiies5p8vpmcjbeq12bkn</string>
 	<key>API_KEY</key>
-	<string>AIzaSyClkDLNQks8V5xHpOjk-Gz4UyqDlqOY51A</string>
+	<string>AIzaSyBXwwl2Fe7qH6DFYsB9W5rMAtcmwKaXWTY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>690011461196</string>
+	<string>98138805062</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.thomson.vibration2</string>
+	<string>com.thomson.vibration</string>
 	<key>PROJECT_ID</key>
-	<string>vibration-v2-5d83d</string>
+	<string>vibration-f5137</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vibration-v2-5d83d.appspot.com</string>
+	<string>vibration-f5137.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:690011461196:ios:57583cba4b479474b906e9</string>
+	<string>1:98138805062:ios:8c0947955028f7cce3cb47</string>
 </dict>
 </plist>
