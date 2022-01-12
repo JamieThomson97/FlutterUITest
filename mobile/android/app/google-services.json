@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:690011461196:android:07b6d0f58990c5cab906e9",
         "android_client_info": {
-          "package_name": "com.example.vibration"
+          "package_name": "com.thomson.vibration"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "690011461196-mavnvrqvav588rlbc6ikph07adt742oa.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.vibration2"
+                "bundle_id": "com.thomson.vibration2"
               }
             }
           ]

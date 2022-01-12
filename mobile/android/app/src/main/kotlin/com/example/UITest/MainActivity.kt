@@ -1,4 +1,4 @@
-package com.example.vibration
+package com.thomson.vibration
 
 import io.flutter.embedding.android.FlutterActivity
 
