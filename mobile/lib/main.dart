@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/bloc/app/app_bloc.dart';
@@ -17,6 +18,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final authenticationRepository = MockAuthenticationRepository(false);
+  FirebaseAuth.instance.useAuthEmulator(
+    "127.0.0.1",
+    4000,
+  );
   runApp(MyApp(authenticationRepository));
 }
 
