@@ -128,25 +128,25 @@ class NowPlayingScrollable extends StatelessWidget {
   double _getScrollOffset(int time) {
     var percentage = time / songLength;
     var something = scrollController.position.maxScrollExtent * percentage;
-    print("Autoscrolling to $something");
+    // print("Autoscrolling to $something");
     return something;
   }
 
   _onStartScroll(ScrollMetrics metrics, AudioControllerBloc bloc) {
     if (_ignoreScrolling) return;
-    print("Scroll Start");
+    // print("Scroll Start");
     bloc.add(MixSeekStartedEvent());
   }
 
   _onUpdateScroll(ScrollMetrics metrics, AudioControllerBloc bloc) {
     if (_ignoreScrolling) return;
-    print("Scroll Update");
+    // print("Scroll Update");
   }
 
   _onEndScroll(ScrollMetrics metrics, ScrollController controller, AudioControllerBloc bloc) {
     if (_ignoreScrolling) return;
     var position = controller.offset / controller.position.maxScrollExtent;
     bloc.add(MixSeekEndedEvent(position));
-    print("Scroll End");
+    // print("Scroll End");
   }
 }

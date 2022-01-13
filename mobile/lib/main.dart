@@ -5,6 +5,7 @@ import 'package:vibration/bloc/app/app_bloc.dart';
 import 'package:vibration/presentation/pages/home_page.dart';
 import 'package:vibration/presentation/pages/now_playing_page.dart';
 import 'package:vibration/presentation/pages/search_page.dart';
+import 'package:vibration/presentation/pages/sign_in_page.dart';
 import 'package:vibration/presentation/widgets/now_playing.dart';
 import 'package:vibration/repository/authentication_repository.dart';
 import 'package:vibration/test/mock_classes.dart';
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
                       ),
                 },
                 theme: theme,
-                home: HomeWidget(),
+                home: SignInPage(),
               );
             },
           )),

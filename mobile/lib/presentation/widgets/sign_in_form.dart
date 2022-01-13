@@ -20,7 +20,6 @@ class SignInForm extends StatelessWidget {
             _LoginFormButton(
               null,
               "Log In",
-              () => context.read<LoginCubit>().logInWithCredentials(),
             ),
             // Center(
             //   child: Row(
@@ -89,10 +88,9 @@ class _EmailInputField extends StatelessWidget {
 }
 
 class _LoginFormButton extends StatelessWidget {
-  const _LoginFormButton(Key? key, this._buttonText, this._onPressed) : super(key: key);
+  const _LoginFormButton(Key? key, this._buttonText) : super(key: key);
 
   final String _buttonText;
-  final Function() _onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -105,20 +103,25 @@ class _LoginFormButton extends StatelessWidget {
           height: 55,
           child: TextButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.red),
+              backgroundColor: state.inputIsValid()
+                  ? MaterialStateProperty.all(Colors.blue)
+                  : MaterialStateProperty.all(Colors.grey[600]),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40.0),
-                  side: BorderSide(color: Colors.blue),
+                  side: BorderSide(
+                    color: state.inputIsValid() ? Colors.blue : Colors.grey,
+                  ),
                 ),
               ),
             ),
-            onPressed: state.inputIsValid() ? _onPressed : _onPressed, // Todo: duh...
+            onPressed: state.inputIsValid() ? () => _onPressed(context) : null,
             child: Center(
               child: Text(
                 state.status == FormzStatus.submissionInProgress ? "Please wait" : _buttonText,
                 style: TextStyle(
                   fontSize: 22,
+                  color: state.inputIsValid() ? Colors.white : Colors.grey,
                 ),
               ),
             ),
@@ -126,5 +129,9 @@ class _LoginFormButton extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onPressed(BuildContext context) {
+    context.read<LoginCubit>().logInWithCredentials();
   }
 }
