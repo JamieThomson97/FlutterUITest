@@ -1,45 +1,28 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:vibration/model/form.dart';
 import 'package:vibration/repository/authentication_repository.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this._authenticationRepository) : super(const LoginState());
+  LoginCubit(this._authenticationRepository) : super(LoginStateNoUser());
 
   final IAuthenticationRepository _authenticationRepository;
 
-  void emailChanged(String value) {
-    final email = Email.dirty(value);
-    emit(
-      state.copyWith(
-        email: email,
-        status: Formz.validate([email, state.password]),
-      ),
-    );
-  }
-
-  void passwordChanged(String value) {
-    final password = Password.dirty(value);
-    emit(
-      state.copyWith(
-        password: password,
-        status: Formz.validate([state.email, password]),
-      ),
-    );
-  }
-
-  Future<void> logInWithCredentials() async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+// I'm deciding that it is the responbility of the Cubit/Bloc to update the state of other blocs. I.e. saving the retrieved user object after logging in here, as opposed to the auth repo doing it.
+  Future<void> logInWithCredentials(String email, String password) async {
+    emit(LoginStateInProgress());
     try {
-      await _authenticationRepository.logInWithEmailAndPassword(
-        email: state.email.value,
-        password: state.password.value,
+      var user = await _authenticationRepository.logInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      if (user != null) {
+        emit(LoginStateUserLoggedIn(user.email!));
+      }
+      emit(LoginStateLoginFailed());
     } on Exception {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
+      emit(LoginStateLoginFailed());
     }
   }
 }

@@ -18,7 +18,7 @@ import 'bloc/audio_controller/audio_controller_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  final authenticationRepository = MockAuthenticationRepository(false);
+  final authenticationRepository = AuthenticationRepository();
   FirebaseAuth.instance.useAuthEmulator(
     "127.0.0.1",
     4000,

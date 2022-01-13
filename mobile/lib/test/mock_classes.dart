@@ -14,7 +14,7 @@ class MockAuthenticationRepository implements IAuthenticationRepository {
 
   final bool automaticallyLoggedIn;
   @override
-  Future<void> logInWithEmailAndPassword({required String email, required String password}) async {
+  Future<User?> logInWithEmailAndPassword({required String email, required String password}) async {
     await Future.delayed(Duration(seconds: 1));
     User newUser = User(
       id: "id",
@@ -34,7 +34,7 @@ class MockAuthenticationRepository implements IAuthenticationRepository {
   }
 
   @override
-  Future<void> signUp({required String email, required String password}) {
+  Future<User?> signUp({required String email, required String password}) {
     // TODO: implement signUp
     throw UnimplementedError();
   }

@@ -57,12 +57,13 @@ class AuthenticationRepository implements IAuthenticationRepository {
   /// Creates a new user with the provided [email] and [password].
   ///
   /// Throws a [SignUpFailure] if an exception occurs.
-  Future<void> signUp({required String email, required String password}) async {
+  Future<User?> signUp({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      var user = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return User(email: user.user!.email, id: 'testId');
     } on Exception {
       throw SignUpFailure();
     }
@@ -83,7 +84,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
   /// Signs in with the provided [email] and [password].
   ///
   /// Throws a [LogInWithEmailAndPasswordFailure] if an exception occurs.
-  Future<void> logInWithEmailAndPassword({
+  Future<User?> logInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -92,6 +93,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
         email: email,
         password: password,
       );
+      return User(email: user.user!.email, id: 'testId');
     } on Exception {
       throw LogInWithEmailAndPasswordFailure();
     }
@@ -119,15 +121,18 @@ extension on firebase_auth.User {
 }
 
 abstract class IAuthenticationRepository {
-  Future<void> signUp({
+  Future<User?> signUp({
     required String email,
     required String password,
   });
-  Future<void> logInWithEmailAndPassword({
+
+  Future<User?> logInWithEmailAndPassword({
     required String email,
     required String password,
   });
+
   Future<void> logOut();
+
   User get currentUser;
   Stream<User> get user;
 }
