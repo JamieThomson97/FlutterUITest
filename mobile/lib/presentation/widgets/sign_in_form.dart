@@ -6,21 +6,24 @@ import 'package:vibration/cubit/login_form/login_form_cubit.dart';
 class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
-      child: Form(
-        // autovalidateMode: AutovalidateMode.always,
-        child: Column(
-          children: [
-            _EmailInputField(),
-            const SizedBox(height: 20),
-            _PasswordInputField(),
-            const SizedBox(height: 60),
-            _LoginFormButton(
-              null,
-              "Log In",
-            ),
-          ],
+    return BlocProvider(
+      create: (context) => LoginFormCubit(),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+        child: Form(
+          // autovalidateMode: AutovalidateMode.always,
+          child: Column(
+            children: [
+              _EmailInputField(),
+              const SizedBox(height: 20),
+              _PasswordInputField(),
+              const SizedBox(height: 60),
+              _LoginFormButton(
+                null,
+                "Log In",
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -119,6 +122,9 @@ class _LoginFormButton extends StatelessWidget {
 
   void _onPressed(BuildContext context) {
     var formState = context.read<LoginFormState>();
-    context.read<LoginCubit>().logInWithCredentials(formState.email, formState.password);
+    context.read<LoginCubit>().logInWithCredentials(
+          formState.email!,
+          formState.password!,
+        );
   }
 }
