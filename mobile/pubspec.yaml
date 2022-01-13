@@ -36,7 +36,6 @@ dependencies:
   equatable: ^2.0.3
   flutter_bloc: ^8.0.0
   pedantic: ^1.11.1
-  formz: ^0.4.0
   bloc_test: 9.0.1
   just_audio: ^0.9.12
   sliding_up_panel: ^2.0.0+1
